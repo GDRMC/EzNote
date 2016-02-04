@@ -3,9 +3,14 @@ Lightweight notepad project. Version: 0.00 dev
 
 This project is designed to be a future lightweight and multiplatform notepad with basic functionnalities. It's designed to open plain text files, but is only able to save .txt files for the moment.
 
+WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILES, I CAN NOT BE RESPONSIBLE OF ANY PROBLEM RELATED TO YOUR USE OF THIS PROGRAM
+
 ##Features
 * Open a file within the editor
 * Save a file within the editor (save as... like), quick save is not supported YET.
+* New file feature
+
+
 * Filename in the window title
 * Extension corrector (.* > .*.txt) for every saved file
 
