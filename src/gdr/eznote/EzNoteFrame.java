@@ -9,9 +9,12 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import gdr.eznote.util.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-public class EzNoteFrame extends javax.swing.JFrame {
+public class EzNoteFrame extends javax.swing.JFrame{
 
+    private EzNoteFileChooser fc = new EzNoteFileChooser("test");
     private final String TITLE_SUFFIX = " - EzNote - Lightweight txt editor";
     private String filecontent = "";
     private File file;
@@ -22,7 +25,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
     public EzNoteFrame() {
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
-        this.jFileChooser1.setFileFilter(filter);
+        this.fc.setFileFilter(filter);
     }
     
     public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -119,9 +122,9 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
-        this.jFileChooser1.setFileFilter(filter);
-        this.jFileChooser1.showOpenDialog(this.jFileChooser1);
-        File f = this.jFileChooser1.getSelectedFile();
+        this.fc.setFileFilter(filter);
+        this.fc.displayOpen(this);
+        File f = this.fc.getSelectedFile();
         this.setTitle(f.getName() + this.TITLE_SUFFIX);
         if (f.canRead()) {
             try {
@@ -148,13 +151,13 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         this.filecontent = this.jTextArea1.getText();
-        this.jFileChooser1.showSaveDialog(this.jFileChooser1);
+        this.fc.showSaveDialog(this);
 
-        file = this.jFileChooser1.getSelectedFile();
+        file = this.fc.getSelectedFile();
         EzNoteUtil.debugFile(file);
         file = new File(EzNoteUtil.getProperFileExtension(file.getAbsolutePath()));
         String path = file.getAbsolutePath();
-        String filename = this.jFileChooser1.getName();
+        String filename = this.fc.getName();
         System.out.println(path + "\n" + filename);
         PrintWriter writer;
 
@@ -209,4 +212,5 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+
 }
