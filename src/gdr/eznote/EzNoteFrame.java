@@ -1,5 +1,6 @@
 package gdr.eznote;
 
+import gdr.eznote.subframes.EzNoteFileChooser;
 import gdr.eznote.subframes.EzNoteFrameAbout;
 import java.io.File;
 import java.io.FileNotFoundException;

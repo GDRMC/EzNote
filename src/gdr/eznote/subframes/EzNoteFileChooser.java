@@ -1,4 +1,4 @@
-package gdr.eznote;
+package gdr.eznote.subframes;
 
 import java.awt.Component;
 import javax.swing.JFileChooser;
