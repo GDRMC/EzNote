@@ -4,6 +4,11 @@
   <NonVisualComponents>
     <Component class="javax.swing.JFileChooser" name="jFileChooser1">
     </Component>
+    <Component class="javax.swing.JMenuItem" name="jMenuItem5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jMenuItem5"/>
+      </Properties>
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
@@ -48,6 +53,19 @@
               </Events>
             </MenuItem>
           </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Preferences"/>
+          </Properties>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="About"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu3MouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>

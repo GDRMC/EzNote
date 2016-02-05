@@ -1,5 +1,6 @@
 package gdr.eznote;
 
+import gdr.eznote.subframes.EzNoteFrameAbout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,12 +10,14 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import gdr.eznote.util.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import javax.swing.JFileChooser;
 
-public class EzNoteFrame extends javax.swing.JFrame{
+public class EzNoteFrame extends javax.swing.JFrame {
 
-    private EzNoteFileChooser fc = new EzNoteFileChooser("test");
+    private File current;
+    
+    private EzNoteFileChooser fc = new EzNoteFileChooser(this, "test");
+    private EzNoteFrameAbout fab = new EzNoteFrameAbout();
     private final String TITLE_SUFFIX = " - EzNote - Lightweight txt editor";
     private String filecontent = "";
     private File file;
@@ -26,11 +29,7 @@ public class EzNoteFrame extends javax.swing.JFrame{
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
         this.fc.setFileFilter(filter);
-    }
-    
-    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-        this.file = null;
-        
+        this.fab.dispose();
     }
 
     /**
@@ -43,6 +42,7 @@ public class EzNoteFrame extends javax.swing.JFrame{
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -53,6 +53,10 @@ public class EzNoteFrame extends javax.swing.JFrame{
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+
+        jMenuItem5.setText("jMenuItem5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,6 +102,17 @@ public class EzNoteFrame extends javax.swing.JFrame{
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setText("Preferences");
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("About");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -119,6 +134,60 @@ public class EzNoteFrame extends javax.swing.JFrame{
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        this.filecontent = this.jTextArea1.getText();
+        int state = this.fc.showSaveDialog(this);
+        if (state == JFileChooser.APPROVE_OPTION) {
+            file = this.fc.getSelectedFile();
+            EzNoteUtil.debugFile(file);
+            file = new File(EzNoteUtil.getProperFileExtension(file.getAbsolutePath()));
+            String path = file.getAbsolutePath();
+            String filename = this.fc.getName();
+            System.out.println(path + "\n" + filename);
+            PrintWriter writer;
+
+            //initialise le flux d'enregistrement
+            //si le fichier n'existe pas
+            if (!file.exists() && file != null) {
+                //crée le fichier
+                try {
+                    file.createNewFile();
+                } catch (IOException ex) {
+                    System.out.println("Impossible de créer le fichier !");
+                }
+                try {
+                    writer = new PrintWriter(file);
+                    writer.print(this.filecontent);
+                    writer.close();
+                    JOptionPane.showMessageDialog(null, "File saved !", "Save", JOptionPane.INFORMATION_MESSAGE);
+                } catch (FileNotFoundException ex) {
+                    JOptionPane.showMessageDialog(null, "Unable to save, the file writer cannot find the file", "Save", JOptionPane.ERROR_MESSAGE);
+                }
+
+                //sinon demande l'autorisation pour écraser
+            } else {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(null, "The file you are trying to save already exists, would you like to overwrite it ?", "Save", JOptionPane.WARNING_MESSAGE);
+                //Demande l'autorisation à l'utilisateur pour écraser le fichier
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    try {
+                        writer = new PrintWriter(file);
+                        writer.print(this.filecontent);
+                        writer.close();
+                        JOptionPane.showMessageDialog(null, "File saved !", "Save", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (FileNotFoundException ex) {
+                        JOptionPane.showMessageDialog(null, "Unable to erase and save, the file writer cannot find the file", "Save", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Save cancelled", "Save", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } else {
+            System.out.println("JFileChooser closed");
+
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
@@ -149,66 +218,23 @@ public class EzNoteFrame extends javax.swing.JFrame{
         this.setTitle("[Untitled]" + this.TITLE_SUFFIX);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        this.filecontent = this.jTextArea1.getText();
-        this.fc.showSaveDialog(this);
-
-        file = this.fc.getSelectedFile();
-        EzNoteUtil.debugFile(file);
-        file = new File(EzNoteUtil.getProperFileExtension(file.getAbsolutePath()));
-        String path = file.getAbsolutePath();
-        String filename = this.fc.getName();
-        System.out.println(path + "\n" + filename);
-        PrintWriter writer;
-
-        //initialise le flux d'enregistrement
-        //si le fichier n'existe pas
-        if (!file.exists() && file != null) {
-            //crée le fichier
-            try {
-                file.createNewFile();
-            } catch (IOException ex) {
-                System.out.println("Impossible de créer le fichier !");
-            }
-            try {
-                writer = new PrintWriter(file);
-                writer.print(this.filecontent);
-                writer.close();
-                JOptionPane.showMessageDialog(null, "File saved !", "Save", JOptionPane.INFORMATION_MESSAGE);
-            } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "Unable to save, the file writer cannot find the file", "Save", JOptionPane.ERROR_MESSAGE);
-            }
-
-            //sinon demande l'autorisation pour écraser
-        } else {
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog(null, "The file you are trying to save already exists, would you like to overwrite it ?", "Save", JOptionPane.WARNING_MESSAGE);
-            //Demande l'autorisation à l'utilisateur pour écraser le fichier
-            if (dialogResult == JOptionPane.YES_OPTION) {
-                try {
-                    writer = new PrintWriter(file);
-                    writer.print(this.filecontent);
-                    writer.close();
-                    JOptionPane.showMessageDialog(null, "File saved !", "Save", JOptionPane.INFORMATION_MESSAGE);
-                } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null, "Unable to erase and save, the file writer cannot find the file", "Save", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Save cancelled", "Save", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        this.fab.setVisible(true);
+    }//GEN-LAST:event_jMenu3MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
