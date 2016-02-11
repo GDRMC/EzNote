@@ -1,7 +1,8 @@
 package gdr.eznote;
 
-import gdr.eznote.subframes.EzNoteFileChooser;
-import gdr.eznote.subframes.EzNoteFrameAbout;
+import gdr.eznote.document.EzNoteDocumentListener;
+import gdr.eznote.frames.EzNoteFileChooser;
+import gdr.eznote.frames.EzNoteFrameAbout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,11 +15,11 @@ import gdr.eznote.util.*;
 import javax.swing.JFileChooser;
 
 public class EzNoteFrame extends javax.swing.JFrame {
-
-    private File current;
     
-    private EzNoteFileChooser fc = new EzNoteFileChooser(this, "test");
-    private EzNoteFrameAbout fab = new EzNoteFrameAbout();
+    private EzNoteFileChooser fc;
+    private EzNoteFrameAbout fab;
+    private EzNoteDocument doc;
+    
     private final String TITLE_SUFFIX = " - EzNote - Lightweight txt editor";
     private String filecontent = "";
     private File file;
@@ -29,8 +30,16 @@ public class EzNoteFrame extends javax.swing.JFrame {
     public EzNoteFrame() {
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
+        this.fc = new EzNoteFileChooser(this,"test");
         this.fc.setFileFilter(filter);
+        this.fab = new EzNoteFrameAbout();
         this.fab.dispose();
+        this.doc = new EzNoteDocument(this);
+        this.editor.getDocument().addDocumentListener(doc.getDocumentListener());
+    }
+    
+    public void setDocumentListener(EzNoteDocumentListener dc){
+        this.editor.getDocument().addDocumentListener(dc);
     }
 
     /**
@@ -44,77 +53,77 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
         jFileChooser1 = new javax.swing.JFileChooser();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        editorPane = new javax.swing.JScrollPane();
+        editor = new javax.swing.JTextArea();
+        menuBar = new javax.swing.JMenuBar();
+        menuFile = new javax.swing.JMenu();
+        buttonNew = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        buttonOpen = new javax.swing.JMenuItem();
+        buttonSaveAs = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        buttonExit = new javax.swing.JMenuItem();
+        menuSettings = new javax.swing.JMenu();
+        menuAbout = new javax.swing.JMenu();
 
         jMenuItem5.setText("jMenuItem5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        editor.setColumns(20);
+        editor.setRows(5);
+        editorPane.setViewportView(editor);
 
-        jMenu1.setText("File");
+        menuFile.setText("File");
 
-        jMenuItem4.setText("New");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        buttonNew.setText("New");
+        buttonNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                buttonNewActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
-        jMenu1.add(jSeparator2);
+        menuFile.add(buttonNew);
+        menuFile.add(jSeparator2);
 
-        jMenuItem1.setText("Open");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        buttonOpen.setText("Open");
+        buttonOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                buttonOpenActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menuFile.add(buttonOpen);
 
-        jMenuItem2.setText("Save");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        buttonSaveAs.setText("Save As...");
+        buttonSaveAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                buttonSaveAsActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
-        jMenu1.add(jSeparator1);
+        menuFile.add(buttonSaveAs);
+        menuFile.add(jSeparator1);
 
-        jMenuItem3.setText("Exit");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        buttonExit.setText("Exit");
+        buttonExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                buttonExitActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        menuFile.add(buttonExit);
 
-        jMenuBar1.add(jMenu1);
+        menuBar.add(menuFile);
 
-        jMenu2.setText("Preferences");
-        jMenuBar1.add(jMenu2);
+        menuSettings.setText("Preferences");
+        menuBar.add(menuSettings);
 
-        jMenu3.setText("About");
-        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+        menuAbout.setText("About");
+        menuAbout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu3MouseClicked(evt);
+                menuAboutMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu3);
+        menuBar.add(menuAbout);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,122 +131,52 @@ public class EzNoteFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE))
+                .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+            .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void buttonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_buttonExitActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        this.filecontent = this.jTextArea1.getText();
-        int state = this.fc.showSaveDialog(this);
-        if (state == JFileChooser.APPROVE_OPTION) {
-            file = this.fc.getSelectedFile();
-            EzNoteUtil.debugFile(file);
-            file = new File(EzNoteUtil.getProperFileExtension(file.getAbsolutePath()));
-            String path = file.getAbsolutePath();
-            String filename = this.fc.getName();
-            System.out.println(path + "\n" + filename);
-            PrintWriter writer;
+    private void buttonSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveAsActionPerformed
+        
+    }//GEN-LAST:event_buttonSaveAsActionPerformed
 
-            //initialise le flux d'enregistrement
-            //si le fichier n'existe pas
-            if (!file.exists() && file != null) {
-                //crée le fichier
-                try {
-                    file.createNewFile();
-                } catch (IOException ex) {
-                    System.out.println("Impossible de créer le fichier !");
-                }
-                try {
-                    writer = new PrintWriter(file);
-                    writer.print(this.filecontent);
-                    writer.close();
-                    JOptionPane.showMessageDialog(null, "File saved !", "Save", JOptionPane.INFORMATION_MESSAGE);
-                } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null, "Unable to save, the file writer cannot find the file", "Save", JOptionPane.ERROR_MESSAGE);
-                }
+    private void buttonOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenActionPerformed
+        
+    }//GEN-LAST:event_buttonOpenActionPerformed
 
-                //sinon demande l'autorisation pour écraser
-            } else {
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(null, "The file you are trying to save already exists, would you like to overwrite it ?", "Save", JOptionPane.WARNING_MESSAGE);
-                //Demande l'autorisation à l'utilisateur pour écraser le fichier
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    try {
-                        writer = new PrintWriter(file);
-                        writer.print(this.filecontent);
-                        writer.close();
-                        JOptionPane.showMessageDialog(null, "File saved !", "Save", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (FileNotFoundException ex) {
-                        JOptionPane.showMessageDialog(null, "Unable to erase and save, the file writer cannot find the file", "Save", JOptionPane.ERROR_MESSAGE);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Save cancelled", "Save", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        } else {
-            System.out.println("JFileChooser closed");
-
-        }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
-        this.fc.setFileFilter(filter);
-        this.fc.displayOpen(this);
-        File f = this.fc.getSelectedFile();
-        this.setTitle(f.getName() + this.TITLE_SUFFIX);
-        if (f.canRead()) {
-            try {
-                System.out.println(f.toString());
-                this.jTextArea1.setText("");
-                try {
-                    this.filecontent = new Scanner(f).useDelimiter("\\Z").next();
-                    this.jTextArea1.setText(this.filecontent);
-                } catch (NoSuchElementException e) {
-                    System.out.println("Selected file is empty");
-                }
-            } catch (NullPointerException | IOException e) {
-                System.out.println("No file selected");
-            }
-        } else {
-            System.out.println("Unable to load file");
-        }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        this.jTextArea1.setText("");
+    private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
+        this.editor.setText("");
         this.setTitle("[Untitled]" + this.TITLE_SUFFIX);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_buttonNewActionPerformed
 
-    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+    private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
         this.fab.setVisible(true);
-    }//GEN-LAST:event_jMenu3MouseClicked
+    }//GEN-LAST:event_menuAboutMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem buttonExit;
+    private javax.swing.JMenuItem buttonNew;
+    private javax.swing.JMenuItem buttonOpen;
+    private javax.swing.JMenuItem buttonSaveAs;
+    private javax.swing.JTextArea editor;
+    private javax.swing.JScrollPane editorPane;
     private javax.swing.JFileChooser jFileChooser1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JMenu menuAbout;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuFile;
+    private javax.swing.JMenu menuSettings;
     // End of variables declaration//GEN-END:variables
 
 }
