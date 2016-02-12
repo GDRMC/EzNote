@@ -13,11 +13,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-//ed
 public class EzNoteDocument {
     
     private EzNoteDocumentListener dc;
     private EzNoteFrameUtil util;
+    private EzNoteFrame parent;
+    
+    private File file;
     
     public EzNoteDocument(EzNoteFrame parent){
         //init event listener for this document
@@ -26,6 +28,7 @@ public class EzNoteDocument {
         this.util = new EzNoteFrameUtil(parent);
         //sets the documentlistener of the frame handled automatically
         parent.setDocumentListener(dc);
+        this.parent = parent;
     }
     
     public EzNoteDocumentListener getDocumentListener(){
@@ -33,18 +36,20 @@ public class EzNoteDocument {
     }
     
     public boolean open(){
+        boolean complete = false;
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
-        this.fc.setFileFilter(filter);
-        this.fc.displayOpen(this);
-        File f = this.fc.getSelectedFile();
-        this.setTitle(f.getName() + this.TITLE_SUFFIX);
+        this.parent.getFileChooser().setFileFilter(filter);
+        this.parent.getFileChooser().displayOpen(parent);
+        File f = this.parent.getFileChooser().getSelectedFile();
+        //TODO: NEED UTIL SUPPORT FOR MAIN WINDOW
+        //this.setTitle(f.getName() + this.TITLE_SUFFIX);
         if (f.canRead()) {
             try {
                 System.out.println(f.toString());
-                this.editor.setText("");
+                this.parent.getEditor().setText("");
                 try {
-                    this.filecontent = new Scanner(f).useDelimiter("\\Z").next();
-                    this.editor.setText(this.filecontent);
+                    this.parent.getEditor().setText(new Scanner(f).useDelimiter("\\Z").next());
+                    complete = true;
                 } catch (NoSuchElementException e) {
                     System.out.println("Selected file is empty");
                 }
@@ -54,6 +59,7 @@ public class EzNoteDocument {
         } else {
             System.out.println("Unable to load file");
         }
+        return complete;
     }
     
     public boolean saveAs(){

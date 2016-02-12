@@ -3,16 +3,8 @@ package gdr.eznote;
 import gdr.eznote.document.EzNoteDocumentListener;
 import gdr.eznote.frames.EzNoteFileChooser;
 import gdr.eznote.frames.EzNoteFrameAbout;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import gdr.eznote.util.*;
-import javax.swing.JFileChooser;
+import javax.swing.JTextArea;
 
 public class EzNoteFrame extends javax.swing.JFrame {
     
@@ -21,8 +13,6 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private EzNoteDocument doc;
     
     private final String TITLE_SUFFIX = " - EzNote - Lightweight txt editor";
-    private String filecontent = "";
-    private File file;
 
     /**
      * Creates new form EzNoteFrame
@@ -41,7 +31,14 @@ public class EzNoteFrame extends javax.swing.JFrame {
     public void setDocumentListener(EzNoteDocumentListener dc){
         this.editor.getDocument().addDocumentListener(dc);
     }
+    
+    public EzNoteFileChooser getFileChooser(){
+        return this.fc;
+    }
 
+    public JTextArea getEditor(){
+        return this.editor;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
