@@ -9,10 +9,8 @@ WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILE
 
 ##Features
 * Open a file within the editor
-* Save a file within the editor (save as... like), quick save is not supported YET.
+* Save a file within the editor (save as... like), quick save is not supported YET
 * New file feature
-
-
 * Filename in the window title
 * Extension corrector (.* > .*.txt) for every saved file
 
