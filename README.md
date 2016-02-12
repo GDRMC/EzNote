@@ -1,9 +1,11 @@
 # EzNote
-Lightweight notepad project. Version: 0.00 dev
+Lightweight notepad project. Version: 0.001d (dev)
 
 This project is designed to be a future lightweight and multiplatform notepad with basic functionnalities. It's designed to open plain text files, but is only able to save .txt files for the moment.
 
 WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILES, I CAN NOT BE RESPONSIBLE OF ANY PROBLEM RELATED TO YOUR USE OF THIS PROGRAM
+
+##[WIKI](https://github.com/GDRMC/EzNote/wiki)
 
 ##Features
 * Open a file within the editor
@@ -21,8 +23,7 @@ WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILE
 * Tabbed editor (code rework needed !)
 
 ##Release
-No release build currently.
+* [0.001d - (WIP) First development release](https://github.com/GDRMC/EzNote/releases/tag/v0.001d)
 
 ##Known Issues
 [SEE ISSUES ON GITHUB](https://github.com/GDRMC/EzNote/issues) FOR MORE INFOS ON ISSUES REPORTED
-* File kept loaded when exiting the file chooser window instead of not acting
