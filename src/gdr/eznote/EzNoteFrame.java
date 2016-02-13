@@ -1,8 +1,10 @@
 package gdr.eznote;
 
+import gdr.eznote.document.EzNoteDocument;
 import gdr.eznote.document.EzNoteDocumentListener;
 import gdr.eznote.frames.EzNoteFileChooser;
 import gdr.eznote.frames.EzNoteFrameAbout;
+import gdr.eznote.util.EzNoteFrameUtil;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JTextArea;
 
@@ -10,13 +12,9 @@ public class EzNoteFrame extends javax.swing.JFrame {
     
     private EzNoteFileChooser fc;
     private EzNoteFrameAbout fab;
+    private EzNoteFrameUtil util;
     private EzNoteDocument doc;
-    
-    private final String TITLE_SUFFIX = " - EzNote - Lightweight txt editor";
 
-    /**
-     * Creates new form EzNoteFrame
-     */
     public EzNoteFrame() {
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
@@ -24,6 +22,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.fc.setFileFilter(filter);
         this.fab = new EzNoteFrameAbout();
         this.fab.dispose();
+        this.util = new EzNoteFrameUtil(this);
         this.doc = new EzNoteDocument(this);
         this.editor.getDocument().addDocumentListener(doc.getDocumentListener());
     }
@@ -57,6 +56,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         buttonNew = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         buttonOpen = new javax.swing.JMenuItem();
+        buttonSave = new javax.swing.JMenuItem();
         buttonSaveAs = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         buttonExit = new javax.swing.JMenuItem();
@@ -89,6 +89,14 @@ public class EzNoteFrame extends javax.swing.JFrame {
             }
         });
         menuFile.add(buttonOpen);
+
+        buttonSave.setText("Save");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveActionPerformed(evt);
+            }
+        });
+        menuFile.add(buttonSave);
 
         buttonSaveAs.setText("Save As...");
         buttonSaveAs.addActionListener(new java.awt.event.ActionListener() {
@@ -152,17 +160,22 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
         this.editor.setText("");
-        this.setTitle("[Untitled]" + this.TITLE_SUFFIX);
+        this.setTitle(this.util.getWindowTitle(false, ""));
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
         this.fab.setVisible(true);
     }//GEN-LAST:event_menuAboutMouseClicked
 
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        
+    }//GEN-LAST:event_buttonSaveActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem buttonExit;
     private javax.swing.JMenuItem buttonNew;
     private javax.swing.JMenuItem buttonOpen;
+    private javax.swing.JMenuItem buttonSave;
     private javax.swing.JMenuItem buttonSaveAs;
     private javax.swing.JTextArea editor;
     private javax.swing.JScrollPane editorPane;
