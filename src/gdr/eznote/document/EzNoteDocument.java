@@ -68,15 +68,15 @@ public class EzNoteDocument {
     }
     
     public boolean saveAs(){
-        this.filecontent = this.editor.getText();
-        int state = this.fc.showSaveDialog(this);
+        boolean complete = false;
+        int state = this.parent.getFileChooser().showSaveDialog(parent);
         if (state == JFileChooser.APPROVE_OPTION) {
-            file = this.fc.getSelectedFile();
+            file = this.parent.getFileChooser().getSelectedFile();
             EzNoteUtil.debugFile(file);
             file = new File(EzNoteUtil.getProperFileExtension(file.getAbsolutePath()));
             String path = file.getAbsolutePath();
-            String filename = this.fc.getName();
-            System.out.println(path + "\n" + filename);
+            String filename = this.parent.getFileChooser().getName();
+            //System.out.println(path + "\n" + filename);
             PrintWriter writer;
 
             //initialise le flux d'enregistrement
@@ -90,7 +90,7 @@ public class EzNoteDocument {
                 }
                 try {
                     writer = new PrintWriter(file);
-                    writer.print(this.filecontent);
+                    writer.print(this.parent.getEditor().getText());
                     writer.close();
                     JOptionPane.showMessageDialog(null, "File saved !", "Save", JOptionPane.INFORMATION_MESSAGE);
                 } catch (FileNotFoundException ex) {
@@ -105,8 +105,9 @@ public class EzNoteDocument {
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     try {
                         writer = new PrintWriter(file);
-                        writer.print(this.filecontent);
+                        writer.print(this.parent.getEditor().getText());
                         writer.close();
+                        complete = true;
                         JOptionPane.showMessageDialog(null, "File saved !", "Save", JOptionPane.INFORMATION_MESSAGE);
                     } catch (FileNotFoundException ex) {
                         JOptionPane.showMessageDialog(null, "Unable to erase and save, the file writer cannot find the file", "Save", JOptionPane.ERROR_MESSAGE);
@@ -117,9 +118,7 @@ public class EzNoteDocument {
             }
         } else {
             System.out.println("JFileChooser closed");
-
         }
-        
-        
+        return complete;
     }
 }
