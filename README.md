@@ -15,12 +15,14 @@ WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILE
 * Extension corrector (.* > .*.txt) for every saved file
 
 ##TODO List
-* Quick-save via hotkey
+* Hotkeys for existing features
 * Quick-save via menu
 * Save changes prompt when exiting
 * Tabbed editor (code rework needed !)
+* Customization
 
-##Release
+##Release (antichronological order)
+* 0.002d - update build 01 (Under developpement)
 * [0.001d - (WIP) First development release](https://github.com/GDRMC/EzNote/releases/tag/v0.001d)
 
 ##Known Issues
