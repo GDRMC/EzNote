@@ -1,7 +1,6 @@
 package gdr.eznote.document;
 
 import gdr.eznote.EzNoteFrame;
-import gdr.eznote.document.EzNoteDocumentListener;
 import gdr.eznote.util.EzNoteFrameUtil;
 import gdr.eznote.util.EzNoteUtil;
 import java.io.File;
@@ -36,14 +35,17 @@ public class EzNoteDocument {
         return this.dc;
     }
     
+    public File getFile(){
+        return this.file;
+    }
+    
     public boolean open(){
         boolean complete = false;
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
         this.parent.getFileChooser().setFileFilter(filter);
         this.parent.getFileChooser().displayOpen(parent);
         File f = this.parent.getFileChooser().getSelectedFile();
-        //TODO: NEED UTIL SUPPORT FOR MAIN WINDOW
-        //this.setTitle(f.getName() + this.TITLE_SUFFIX);
+        this.parent.setTitle(util.getWindowTitle(true, f.getName()));
         if (f.canRead()) {
             try {
                 System.out.println(f.toString());
@@ -60,11 +62,22 @@ public class EzNoteDocument {
         } else {
             System.out.println("Unable to load file");
         }
+        this.dc.debugChange();
         return complete;
     }
     
     public boolean saveQ(){
-        return false;
+        boolean saved = false;
+        if(this.dc.isFileChanged()){
+            boolean operation = this.saveAs();
+            if(operation){
+                saved = true;
+            }
+        } else {
+            //manual save
+        }
+        this.dc.debugChange();
+        return saved;
     }
     
     public boolean saveAs(){
@@ -119,6 +132,8 @@ public class EzNoteDocument {
         } else {
             System.out.println("JFileChooser closed");
         }
+        this.dc.debugChange();
         return complete;
     }
+    
 }

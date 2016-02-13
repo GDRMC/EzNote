@@ -56,6 +56,10 @@ public class EzNoteDocumentListener implements DocumentListener{
     public void notifyEvent(String str){
         System.out.println("EzFrameDL dc > "+str);
     }
+    
+    public void debugChange(){
+        System.out.println("EzFrameDL ch > "+this.getChangeIndicator()+" - "+this.getChangeCounter());
+    }
 
     /**
      * Returns the change counter of the document
@@ -71,6 +75,14 @@ public class EzNoteDocumentListener implements DocumentListener{
      */
     public boolean getChangeIndicator() {
         return changeIndicator;
+    }
+    
+    /**
+     * Returns if the file has been changed or not
+     * @return boolean file changed ?
+     */
+    public boolean isFileChanged(){
+        return this.getChangeIndicator()==true && this.getChangeCounter()>0;
     }
 
     /**

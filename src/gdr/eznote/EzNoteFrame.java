@@ -31,8 +31,20 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.editor.getDocument().addDocumentListener(dc);
     }
     
+    public EzNoteFrameUtil getUtilities(){
+        return this.util;
+    }
+    
     public EzNoteFileChooser getFileChooser(){
         return this.fc;
+    }
+    
+    public EzNoteDocument getDocument(){
+        return this.doc;
+    }
+    
+    public String getFilename(){
+        return this.doc.getFile().getName();
     }
 
     public JTextArea getEditor(){
@@ -151,16 +163,20 @@ public class EzNoteFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonExitActionPerformed
 
     private void buttonSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveAsActionPerformed
-        
+        this.doc.saveAs();
+        this.doc.getDocumentListener().resetIndicators();
+        this.util.getWindowTitle(true, this.getDocument().getFile().getName());
     }//GEN-LAST:event_buttonSaveAsActionPerformed
 
     private void buttonOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenActionPerformed
-        
+        this.doc.open();
+        this.doc.getDocumentListener().resetIndicators();
     }//GEN-LAST:event_buttonOpenActionPerformed
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
         this.editor.setText("");
         this.setTitle(this.util.getWindowTitle(false, ""));
+        this.doc.getDocumentListener().resetIndicators();
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
@@ -168,7 +184,8 @@ public class EzNoteFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_menuAboutMouseClicked
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
-        
+        this.doc.saveQ();
+        this.doc.getDocumentListener().resetIndicators();
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
