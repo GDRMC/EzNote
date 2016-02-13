@@ -4,10 +4,6 @@ import java.io.File;
 
 public class EzNoteUtil {
     
-    public EzNoteUtil(){
-        
-    }
-    
     public static String getProperFileExtension(String absolutePath){
         if(absolutePath.endsWith("txt")){
             return absolutePath;
