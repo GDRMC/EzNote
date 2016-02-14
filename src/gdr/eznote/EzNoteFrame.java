@@ -1,7 +1,6 @@
 package gdr.eznote;
 
 import gdr.eznote.document.EzNoteDocument;
-import gdr.eznote.document.EzNoteDocumentListener;
 import gdr.eznote.frames.EzNoteFileChooser;
 import gdr.eznote.frames.EzNoteFrameAbout;
 import gdr.eznote.util.EzNoteFrameUtil;
@@ -24,10 +23,10 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.fab.dispose();
         this.util = new EzNoteFrameUtil(this);
         this.doc = new EzNoteDocument(this);
-        this.editor.getDocument().addDocumentListener(doc.getDocumentListener());
+        this.editor.getDocument().addDocumentListener(doc);
     }
     
-    public void setDocumentListener(EzNoteDocumentListener dc){
+    public void setDocumentListener(EzNoteDocument dc){
         this.editor.getDocument().addDocumentListener(dc);
     }
     
@@ -164,19 +163,24 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
     private void buttonSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveAsActionPerformed
         this.doc.saveAs();
-        this.doc.getDocumentListener().resetIndicators();
+        this.doc.resetIndicators();
         this.util.getWindowTitle(true, this.getDocument().getFile().getName());
     }//GEN-LAST:event_buttonSaveAsActionPerformed
 
     private void buttonOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenActionPerformed
-        this.doc.open();
-        this.doc.getDocumentListener().resetIndicators();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
+        this.getFileChooser().setFileFilter(filter);
+        int state = this.getFileChooser().showOpenDialog(this);
+        if(this.getFileChooser().getSelectedFile().exists() && this.getFileChooser().getSelectedFile().isFile()){
+            this.doc.open(this.getFileChooser().getSelectedFile(), this.getFileChooser(), state);
+            this.doc.resetIndicators();
+        }
     }//GEN-LAST:event_buttonOpenActionPerformed
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
         this.editor.setText("");
         this.setTitle(this.util.getWindowTitle(false, ""));
-        this.doc.getDocumentListener().resetIndicators();
+        this.doc.resetIndicators();
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
@@ -185,7 +189,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         this.doc.saveQ();
-        this.doc.getDocumentListener().resetIndicators();
+        this.doc.resetIndicators();
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
