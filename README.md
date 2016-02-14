@@ -21,7 +21,7 @@ WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILE
 * Tabbed editor (code rework needed !)
 * Customization
 
-##Release (antichronological order)
+##Release (antichronological order) - No full release build for now
 * 0.002d - update build 01 (Under developpement)
 * [0.001d - (WIP) First development release](https://github.com/GDRMC/EzNote/releases/tag/v0.001d)
 
