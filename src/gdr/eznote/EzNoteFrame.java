@@ -1,32 +1,22 @@
 package gdr.eznote;
 
-import gdr.eznote.document.EzNoteDocumentListener;
+import gdr.eznote.document.EzNoteDocument;
 import gdr.eznote.frames.EzNoteFileChooser;
 import gdr.eznote.frames.EzNoteFrameAbout;
-import java.io.File;
+import gdr.eznote.util.EzNoteFrameUtil;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import gdr.eznote.util.*;
-import javax.swing.JFileChooser;
+import javax.swing.JTextArea;
 
 public class EzNoteFrame extends javax.swing.JFrame {
     
     private EzNoteFileChooser fc;
     private EzNoteFrameAbout fab;
+    private EzNoteFrameUtil util;
     private EzNoteDocument doc;
-    
-    private final String TITLE_SUFFIX = " - EzNote - Lightweight txt editor";
-    private String filecontent = "";
-    private File file;
 
-    /**
-     * Creates new form EzNoteFrame
-     */
     public EzNoteFrame() {
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
@@ -34,14 +24,33 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.fc.setFileFilter(filter);
         this.fab = new EzNoteFrameAbout();
         this.fab.dispose();
+        this.util = new EzNoteFrameUtil(this);
         this.doc = new EzNoteDocument(this);
-        this.editor.getDocument().addDocumentListener(doc.getDocumentListener());
     }
     
-    public void setDocumentListener(EzNoteDocumentListener dc){
+    public void setDocumentListener(EzNoteDocument dc){
         this.editor.getDocument().addDocumentListener(dc);
     }
+    
+    public EzNoteFrameUtil getUtilities(){
+        return this.util;
+    }
+    
+    public EzNoteFileChooser getFileChooser(){
+        return this.fc;
+    }
+    
+    public EzNoteDocument getDocument(){
+        return this.doc;
+    }
+    
+    public String getFilename(){
+        return this.doc.getFile().getName();
+    }
 
+    public JTextArea getEditor(){
+        return this.editor;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,6 +69,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         buttonNew = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         buttonOpen = new javax.swing.JMenuItem();
+        buttonSave = new javax.swing.JMenuItem();
         buttonSaveAs = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         buttonExit = new javax.swing.JMenuItem();
@@ -92,6 +102,14 @@ public class EzNoteFrame extends javax.swing.JFrame {
             }
         });
         menuFile.add(buttonOpen);
+
+        buttonSave.setText("Save");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveActionPerformed(evt);
+            }
+        });
+        menuFile.add(buttonSave);
 
         buttonSaveAs.setText("Save As...");
         buttonSaveAs.addActionListener(new java.awt.event.ActionListener() {
@@ -146,26 +164,45 @@ public class EzNoteFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonExitActionPerformed
 
     private void buttonSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveAsActionPerformed
-        
+        this.doc.saveAs();
+        this.doc.resetIndicators();
+        this.util.getWindowTitle(true, this.getDocument().getFile().getName());
     }//GEN-LAST:event_buttonSaveAsActionPerformed
 
     private void buttonOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenActionPerformed
-        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
+        this.getFileChooser().setFileFilter(filter);
+        int state = this.getFileChooser().showOpenDialog(this);
+        if(this.getFileChooser().getSelectedFile().exists() && this.getFileChooser().getSelectedFile().isFile()){
+            try {
+                this.doc.open(this.getFileChooser().getSelectedFile(), this.getFileChooser(), state);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setTitle(this.util.getWindowTitle(false, this.doc.getFilename()));
+        }
     }//GEN-LAST:event_buttonOpenActionPerformed
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
         this.editor.setText("");
-        this.setTitle("[Untitled]" + this.TITLE_SUFFIX);
+        this.setTitle(this.util.getWindowTitle(false, "Untitled"));
+        this.doc.resetIndicators();
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
         this.fab.setVisible(true);
     }//GEN-LAST:event_menuAboutMouseClicked
 
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        this.doc.saveQ();
+        this.doc.resetIndicators();
+    }//GEN-LAST:event_buttonSaveActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem buttonExit;
     private javax.swing.JMenuItem buttonNew;
     private javax.swing.JMenuItem buttonOpen;
+    private javax.swing.JMenuItem buttonSave;
     private javax.swing.JMenuItem buttonSaveAs;
     private javax.swing.JTextArea editor;
     private javax.swing.JScrollPane editorPane;
