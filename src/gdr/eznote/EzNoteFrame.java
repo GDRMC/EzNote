@@ -4,6 +4,9 @@ import gdr.eznote.document.EzNoteDocument;
 import gdr.eznote.frames.EzNoteFileChooser;
 import gdr.eznote.frames.EzNoteFrameAbout;
 import gdr.eznote.util.EzNoteFrameUtil;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JTextArea;
 
@@ -23,7 +26,6 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.fab.dispose();
         this.util = new EzNoteFrameUtil(this);
         this.doc = new EzNoteDocument(this);
-        this.editor.getDocument().addDocumentListener(doc);
     }
     
     public void setDocumentListener(EzNoteDocument dc){
@@ -172,14 +174,18 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.getFileChooser().setFileFilter(filter);
         int state = this.getFileChooser().showOpenDialog(this);
         if(this.getFileChooser().getSelectedFile().exists() && this.getFileChooser().getSelectedFile().isFile()){
-            this.doc.open(this.getFileChooser().getSelectedFile(), this.getFileChooser(), state);
-            this.doc.resetIndicators();
+            try {
+                this.doc.open(this.getFileChooser().getSelectedFile(), this.getFileChooser(), state);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.setTitle(this.util.getWindowTitle(false, this.doc.getFilename()));
         }
     }//GEN-LAST:event_buttonOpenActionPerformed
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
         this.editor.setText("");
-        this.setTitle(this.util.getWindowTitle(false, ""));
+        this.setTitle(this.util.getWindowTitle(false, "Untitled"));
         this.doc.resetIndicators();
     }//GEN-LAST:event_buttonNewActionPerformed
 
