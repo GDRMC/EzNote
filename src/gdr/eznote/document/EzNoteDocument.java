@@ -1,8 +1,7 @@
 package gdr.eznote.document;
 
 import gdr.eznote.EzNoteFrame;
-import gdr.eznote.util.EzNoteFrameUtil;
-import gdr.eznote.util.EzNoteUtil;
+import gdr.eznote.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -85,8 +84,8 @@ public class EzNoteDocument {
         int state = this.parent.getFileChooser().showSaveDialog(parent);
         if (state == JFileChooser.APPROVE_OPTION) {
             file = this.parent.getFileChooser().getSelectedFile();
-            EzNoteUtil.debugFile(file);
-            file = new File(EzNoteUtil.getProperFileExtension(file.getAbsolutePath()));
+            EzNoteFrameUtil.debugFile(file);
+            file = new File(EzNoteFrameUtil.getProperFileExtension(file.getAbsolutePath()));
             String path = file.getAbsolutePath();
             String filename = this.parent.getFileChooser().getName();
             //System.out.println(path + "\n" + filename);
