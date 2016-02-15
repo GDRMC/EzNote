@@ -5,7 +5,6 @@ import gdr.eznote.frames.EzNoteFileChooser;
 import gdr.eznote.frames.EzNoteFrameAbout;
 import gdr.eznote.util.EzNoteFrameUtil;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -18,7 +17,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private EzNoteFrameUtil util;
     private EzNoteDocument doc;
 
-    public EzNoteFrame() throws IOException {
+    public EzNoteFrame() {
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
         this.fc = new EzNoteFileChooser(this,"test");
