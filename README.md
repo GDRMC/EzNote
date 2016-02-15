@@ -1,7 +1,7 @@
 # EzNote
 Lightweight notepad project. Version: 0.001d (dev)
 
-This project is designed to be a future lightweight and multiplatform notepad with basic functionnalities. It's designed to open plain text files, but is only able to save .txt files for the moment.
+This project (french: pronounce "izinote") is designed to be a future lightweight and multiplatform notepad with basic functionnalities. It's designed to open plain text files, but is only able to save .txt files for the moment.
 
 WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILES, I CAN NOT BE RESPONSIBLE OF ANY PROBLEM RELATED TO YOUR USE OF THIS PROGRAM
 
