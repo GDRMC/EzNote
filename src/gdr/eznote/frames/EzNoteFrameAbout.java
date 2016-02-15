@@ -1,10 +1,31 @@
 package gdr.eznote.frames;
 
+import gdr.eznote.util.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
+
 public class EzNoteFrameAbout extends javax.swing.JFrame {
 
+    String changelog;
+    
     public EzNoteFrameAbout() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    
+    public String getChangelogText() {
+        try {
+            URL url = new URL("https://raw.githubusercontent.com/GDRMC/EzNote/master/changelog.txt");
+            Scanner s = new Scanner(url.openStream()).useDelimiter("\\Z");
+            changelog = s.next();
+        } catch(MalformedURLException e){
+            changelog = "ERROR: Failed to load changelog: MalformedURLException";
+        } catch(IOException e){
+            changelog = "ERROR: Failed to load changelog: IOException";
+        }
+        return changelog;
     }
 
     /**
@@ -31,11 +52,11 @@ public class EzNoteFrameAbout extends javax.swing.JFrame {
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel1.setText("EzNote");
+        jLabel1.setText(""+EzNoteTexts.SOFTWARE_NAME);
 
         jLabel2.setText("Developement build");
 
-        jLabel3.setText("version: 0.001 dev");
+        jLabel3.setText("version: "+EzNoteTexts.SOFTWARE_VERSION+" dev");
 
         jLabel4.setText("Code by GDR");
 
@@ -50,7 +71,7 @@ public class EzNoteFrameAbout extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addContainerGap(234, Short.MAX_VALUE))
+                .addContainerGap(203, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -73,7 +94,11 @@ public class EzNoteFrameAbout extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setForeground(new java.awt.Color(51, 255, 51));
         jTextArea1.setRows(5);
-        jTextArea1.setText("Not implemented yet... :\"(");
+        try {
+            jTextArea1.setText(this.getChangelogText());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
