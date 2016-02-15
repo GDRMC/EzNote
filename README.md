@@ -6,6 +6,7 @@ This project is designed to be a future lightweight and multiplatform notepad wi
 WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILES, I CAN NOT BE RESPONSIBLE OF ANY PROBLEM RELATED TO YOUR USE OF THIS PROGRAM
 
 ##[WIKI](https://github.com/GDRMC/EzNote/wiki)
+The wiki is currently under development.
 
 ##Features
 * Open a file within the editor
@@ -13,8 +14,10 @@ WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILE
 * New file feature
 * Filename in the window title
 * Extension corrector (.* > .*.txt) for every saved file
+See the full [CHANGELOG](https://raw.githubusercontent.com/GDRMC/EzNote/master/changelog.txt)
 
 ##TODO List
+* Core rework
 * Hotkeys for existing features
 * Quick-save via menu
 * Save changes prompt when exiting
