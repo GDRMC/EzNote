@@ -14,6 +14,7 @@ The wiki is currently under development.
 * New file feature
 * Filename in the window title
 * Extension corrector (.* > .*.txt) for every saved file
+* 
 See the full [CHANGELOG](https://raw.githubusercontent.com/GDRMC/EzNote/master/changelog.txt)
 
 ##TODO List
