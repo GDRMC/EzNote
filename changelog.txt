@@ -1,0 +1,18 @@
+@@ Upcoming Changes @@
+
+- File save protection when exiting
+- File changes indicator and listeners
+- Menu bar with icons
+- Core rework
+
+@@@@@@@@@@@@@@@@@@@@@@
+
+=== v0.001d ===
+
+- Basic "Save as" function
+- Basic "Open" function
+- New file feature
+- Filename in the window title
+- Extension corrector (.* > .*.txt) for every saved file
+
+===============
