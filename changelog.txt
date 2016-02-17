@@ -2,6 +2,8 @@
 
 - File save protection when exiting
 - File changes indicator and listeners
+- Menu bar with icons
+- Core rework
 
 @@@@@@@@@@@@@@@@@@@@@@
 
