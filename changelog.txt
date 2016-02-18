@@ -6,6 +6,7 @@
 
 ===  Next-  ===
 
+- Basic quick-save function
 - Menu bar with icons
 - Icons and shortcuts in "File" menu
 - Core rework (open/save/saveas)
