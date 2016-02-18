@@ -46,6 +46,14 @@ public class EzNoteDocument implements DocumentListener {
     public String getFilename() {
         return this.filename;
     }
+    
+    public void disableSaveButtons(){
+        //TODO
+    }
+    
+    public void enableSaveButtons(){
+        //TODO
+    }
 
     public boolean open(File f, EzNoteFileChooser fc, int state) throws FileNotFoundException {
         boolean complete = false;

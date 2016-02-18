@@ -17,6 +17,7 @@ public class EzNoteLauncher {
         main.setVisible(true);
         main.setTitle("EzNote - Lightweight txt editor");
         main.setLocationRelativeTo(null);
+        main.initializeStartup();
     }
     
 }
