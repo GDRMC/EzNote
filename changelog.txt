@@ -1,11 +1,17 @@
 @@ Upcoming Changes @@
 
 - File save protection when exiting
-- File changes indicator and listeners
-- Menu bar with icons
-- Core rework
 
 @@@@@@@@@@@@@@@@@@@@@@
+
+===  Next-  ===
+
+- Menu bar with icons
+- Icons and shortcuts in "File" menu
+- Core rework (open/save/saveas)
+- File change listeners with visual indicator
+
+===============
 
 === v0.001d ===
 
