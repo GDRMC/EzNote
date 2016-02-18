@@ -33,6 +33,7 @@ public class EzNoteDocument implements DocumentListener {
         //sets the documentlistener of the frame handled automatically
         parent.setDocumentListener(this);
         this.parent = parent;
+        this.filename = "-1";
     }
 
     public EzNoteFrameUtil getUtilities() {
@@ -45,14 +46,6 @@ public class EzNoteDocument implements DocumentListener {
     
     public String getFilename() {
         return this.filename;
-    }
-    
-    public void disableSaveButtons(){
-        //TODO
-    }
-    
-    public void enableSaveButtons(){
-        //TODO
     }
 
     public boolean open(File f, EzNoteFileChooser fc, int state) throws FileNotFoundException {
@@ -88,20 +81,44 @@ public class EzNoteDocument implements DocumentListener {
         }
         this.debugChange();
         this.openScanner.close();
+        if(complete){
+            this.resetIndicators();
+        }
         return complete;
     }
 
     public boolean saveQ() {
         boolean saved = false;
+        PrintWriter writer;
         if (this.isFileChanged()) {
-            boolean operation = this.saveAs();
-            if (operation) {
-                saved = true;
+            if (!"-1".equals(this.filename)){
+                if(this.file.exists()){
+                    try {
+                        writer = new PrintWriter(file);
+                        writer.print(this.parent.getEditor().getText());
+                        writer.close();
+                        JOptionPane.showMessageDialog(null, "File quick-saved !", "Save", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (FileNotFoundException ex) {
+                        JOptionPane.showMessageDialog(null, "Unable to quick-save, the file writer cannot find the file", "Save", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    boolean operation = this.saveAs();
+                    if (operation) {
+                        saved = true;
+                    }
+                }
+            } else {
+                //if the file is untitled and not saved
+                boolean operation = this.saveAs();
+                if (operation) {
+                    saved = true;
+                }
             }
-        } else {
-            //manual save
         }
         this.debugChange();
+        if(saved){
+            this.resetIndicators();
+        }
         return saved;
     }
 
@@ -116,11 +133,7 @@ public class EzNoteDocument implements DocumentListener {
             String filename = this.parent.getFileChooser().getName();
             //System.out.println(path + "\n" + filename);
             PrintWriter writer;
-
-            //initialise le flux d'enregistrement
-            //si le fichier n'existe pas
             if (!file.exists() && file != null) {
-                //crée le fichier
                 try {
                     file.createNewFile();
                 } catch (IOException ex) {
@@ -134,12 +147,9 @@ public class EzNoteDocument implements DocumentListener {
                 } catch (FileNotFoundException ex) {
                     JOptionPane.showMessageDialog(null, "Unable to save, the file writer cannot find the file", "Save", JOptionPane.ERROR_MESSAGE);
                 }
-
-                //sinon demande l'autorisation pour écraser
             } else {
                 int dialogButton = JOptionPane.YES_NO_OPTION;
                 int dialogResult = JOptionPane.showConfirmDialog(null, "The file you are trying to save already exists, would you like to overwrite it ?", "Save", JOptionPane.WARNING_MESSAGE);
-                //Demande l'autorisation à l'utilisateur pour écraser le fichier
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     try {
                         writer = new PrintWriter(file);
@@ -163,37 +173,24 @@ public class EzNoteDocument implements DocumentListener {
 
     @Override
     public void insertUpdate(DocumentEvent de) {
-        this.changeIndicator = true;
-        this.changeCounter++;
-        this.updateTitle();
-        notifyEvent("event insert");
+        this.fireUpdateEvent();
     }
 
     @Override
     public void removeUpdate(DocumentEvent de) {
-        this.changeIndicator = true;
-        this.changeCounter++;
-        this.updateTitle();
-        notifyEvent("event remove");
+        this.fireUpdateEvent();
     }
 
     @Override
     public void changedUpdate(DocumentEvent de) {
+        this.fireUpdateEvent();
+    }
+    
+    private void fireUpdateEvent(){
         this.changeIndicator = true;
         this.changeCounter++;
         this.updateTitle();
-        notifyEvent("event change");
-    }
-
-    /**
-     * Prints a string to the console (debug) Deprecated, this will be removed
-     * in some releases
-     *
-     * @param str
-     */
-    @Deprecated
-    public void notifyEvent(String str) {
-        System.out.println("EzFrameDL dc > " + str);
+        this.parent.enableSaveButtons();
     }
 
     public void debugChange() {
@@ -245,36 +242,18 @@ public class EzNoteDocument implements DocumentListener {
     }
 
     /**
-     * Set the change counter of the document Deprecated: will be replaced by
-     * resetChange, this is for debug only
-     *
-     * @param changeCounter
-     */
-    @Deprecated
-    public void setChangeCounter(int changeCounter) {
-        this.changeCounter = changeCounter;
-    }
-
-    /**
-     * Set the change indicator Deprecated: will be replaced by resetChange,
-     * this is for debug only
-     *
-     * @param changeIndicator
-     */
-    @Deprecated
-    public void setChangeIndicator(boolean changeIndicator) {
-        this.changeIndicator = changeIndicator;
-    }
-
-    /**
      * Resets the changes censors of the document
      */
     public void resetIndicators() {
         this.changeIndicator = false;
         this.changeCounter = 0;
         if(this.parent.getTitle().charAt(0) == '*'){
-            this.parent.setTitle(this.parent.getTitle().substring(0));
+            this.parent.setTitle(this.parent.getTitle().substring(1));
         }
+        if(this.parent.getTitle().contains("<-1>")){
+            this.parent.getUtilities().getWindowTitle(false, "Untitled");
+        }
+        this.parent.disableSaveButtons();
         System.out.println("EzFrameDL ch > reset " + this.getChangeIndicator() + " - " + this.getChangeCounter());
     }
 

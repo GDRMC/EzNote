@@ -300,6 +300,17 @@ public class EzNoteFrame extends javax.swing.JFrame {
     
     public void initializeStartup(){
         this.newFile();
+        this.disableSaveButtons();
+    }
+    
+    public void enableSaveButtons(){
+        this.buttonSave.setEnabled(true);
+        this.toolQSave.setEnabled(true);
+    }
+    
+    public void disableSaveButtons(){
+        this.buttonSave.setEnabled(false);
+        this.toolQSave.setEnabled(false);
     }
     
     ////ACTIONS
