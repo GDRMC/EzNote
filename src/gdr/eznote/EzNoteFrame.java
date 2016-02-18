@@ -62,7 +62,6 @@ public class EzNoteFrame extends javax.swing.JFrame {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jFileChooser1 = new javax.swing.JFileChooser();
-        jSeparator6 = new javax.swing.JSeparator();
         editorPane = new javax.swing.JScrollPane();
         editor = new javax.swing.JTextArea();
         jToolBar1 = new javax.swing.JToolBar();
@@ -83,6 +82,8 @@ public class EzNoteFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         buttonExit = new javax.swing.JMenuItem();
         menuSettings = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         menuAbout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -160,6 +161,8 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
         menuFile.setText("File");
 
+        buttonNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        buttonNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_newfile.png"))); // NOI18N
         buttonNew.setText("New");
         buttonNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +172,8 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuFile.add(buttonNew);
         menuFile.add(jSeparator2);
 
+        buttonOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        buttonOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_openfile.png"))); // NOI18N
         buttonOpen.setText("Open");
         buttonOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,7 +182,10 @@ public class EzNoteFrame extends javax.swing.JFrame {
         });
         menuFile.add(buttonOpen);
 
+        buttonSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        buttonSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile.png"))); // NOI18N
         buttonSave.setText("Save");
+        buttonSave.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile_disabled.png"))); // NOI18N
         buttonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSaveActionPerformed(evt);
@@ -185,6 +193,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         });
         menuFile.add(buttonSave);
 
+        buttonSaveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_saveasfile.png"))); // NOI18N
         buttonSaveAs.setText("Save As...");
         buttonSaveAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,6 +203,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuFile.add(buttonSaveAs);
         menuFile.add(jSeparator1);
 
+        buttonExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_MASK));
         buttonExit.setText("Exit");
         buttonExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,6 +215,13 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuBar.add(menuFile);
 
         menuSettings.setText("Preferences");
+
+        jMenuItem1.setText("Appearance");
+        menuSettings.add(jMenuItem1);
+
+        jMenuItem2.setText("Settings");
+        menuSettings.add(jMenuItem2);
+
         menuBar.add(menuSettings);
 
         menuAbout.setText("About");
@@ -231,8 +248,8 @@ public class EzNoteFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE))
+                .addGap(0, 4, Short.MAX_VALUE)
+                .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -328,12 +345,13 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane editorPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu menuAbout;
     private javax.swing.JMenuBar menuBar;
