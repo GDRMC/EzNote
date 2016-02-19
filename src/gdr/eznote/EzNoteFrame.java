@@ -59,11 +59,19 @@ public class EzNoteFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jFileChooser1 = new javax.swing.JFileChooser();
-        jMenuItem5 = new javax.swing.JMenuItem();
         editorPane = new javax.swing.JScrollPane();
         editor = new javax.swing.JTextArea();
+        jToolBar1 = new javax.swing.JToolBar();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        toolNew = new javax.swing.JButton();
+        jSeparator5 = new javax.swing.JToolBar.Separator();
+        jButton1 = new javax.swing.JButton();
+        toolQSave = new javax.swing.JButton();
+        toolSave = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JToolBar.Separator();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         buttonNew = new javax.swing.JMenuItem();
@@ -74,9 +82,9 @@ public class EzNoteFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         buttonExit = new javax.swing.JMenuItem();
         menuSettings = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         menuAbout = new javax.swing.JMenu();
-
-        jMenuItem5.setText("jMenuItem5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,8 +92,77 @@ public class EzNoteFrame extends javax.swing.JFrame {
         editor.setRows(5);
         editorPane.setViewportView(editor);
 
+        jToolBar1.setBorder(null);
+        jToolBar1.setFloatable(false);
+        jToolBar1.setForeground(new java.awt.Color(0, 0, 0));
+        jToolBar1.setRollover(true);
+        jToolBar1.setMaximumSize(new java.awt.Dimension(1000000, 32));
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jToolBar1, org.jdesktop.beansbinding.ELProperty.create("${preferredSize}"), jToolBar1, org.jdesktop.beansbinding.BeanProperty.create("minimumSize"));
+        bindingGroup.addBinding(binding);
+
+        jSeparator3.setOrientation(javax.swing.SwingConstants.HORIZONTAL);
+        jSeparator3.setToolTipText("");
+        jToolBar1.add(jSeparator3);
+
+        toolNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_newfile.png"))); // NOI18N
+        toolNew.setAlignmentX(0.5F);
+        toolNew.setBorder(null);
+        toolNew.setFocusable(false);
+        toolNew.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        toolNew.setMaximumSize(new java.awt.Dimension(28, 28));
+        toolNew.setMinimumSize(new java.awt.Dimension(28, 28));
+        toolNew.setPreferredSize(new java.awt.Dimension(28, 28));
+        toolNew.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toolNewActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(toolNew);
+        jToolBar1.add(jSeparator5);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_openfile.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
+
+        toolQSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile.png"))); // NOI18N
+        toolQSave.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile_disabled.png"))); // NOI18N
+        toolQSave.setEnabled(false);
+        toolQSave.setFocusable(false);
+        toolQSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        toolQSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolQSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toolQSaveActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(toolQSave);
+
+        toolSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_saveasfile.png"))); // NOI18N
+        toolSave.setFocusable(false);
+        toolSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        toolSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toolSaveActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(toolSave);
+        jToolBar1.add(jSeparator4);
+
         menuFile.setText("File");
 
+        buttonNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        buttonNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_newfile.png"))); // NOI18N
         buttonNew.setText("New");
         buttonNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,6 +172,8 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuFile.add(buttonNew);
         menuFile.add(jSeparator2);
 
+        buttonOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        buttonOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_openfile.png"))); // NOI18N
         buttonOpen.setText("Open");
         buttonOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,7 +182,10 @@ public class EzNoteFrame extends javax.swing.JFrame {
         });
         menuFile.add(buttonOpen);
 
+        buttonSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        buttonSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile.png"))); // NOI18N
         buttonSave.setText("Save");
+        buttonSave.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile_disabled.png"))); // NOI18N
         buttonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSaveActionPerformed(evt);
@@ -111,6 +193,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         });
         menuFile.add(buttonSave);
 
+        buttonSaveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_saveasfile.png"))); // NOI18N
         buttonSaveAs.setText("Save As...");
         buttonSaveAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +203,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuFile.add(buttonSaveAs);
         menuFile.add(jSeparator1);
 
+        buttonExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_MASK));
         buttonExit.setText("Exit");
         buttonExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +215,13 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuBar.add(menuFile);
 
         menuSettings.setText("Preferences");
+
+        jMenuItem1.setText("Appearance");
+        menuSettings.add(jMenuItem1);
+
+        jMenuItem2.setText("Settings");
+        menuSettings.add(jMenuItem2);
+
         menuBar.add(menuSettings);
 
         menuAbout.setText("About");
@@ -149,12 +240,19 @@ public class EzNoteFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 4, Short.MAX_VALUE)
+                .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -164,12 +262,65 @@ public class EzNoteFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonExitActionPerformed
 
     private void buttonSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveAsActionPerformed
-        this.doc.saveAs();
-        this.doc.resetIndicators();
-        this.util.getWindowTitle(true, this.getDocument().getFile().getName());
+        this.saveAsFile();
     }//GEN-LAST:event_buttonSaveAsActionPerformed
 
     private void buttonOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenActionPerformed
+        this.openFile();
+    }//GEN-LAST:event_buttonOpenActionPerformed
+
+    private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
+        this.newFile();
+    }//GEN-LAST:event_buttonNewActionPerformed
+
+    private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
+        this.fab.setVisible(true);
+    }//GEN-LAST:event_menuAboutMouseClicked
+
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        this.saveFile();
+    }//GEN-LAST:event_buttonSaveActionPerformed
+
+    private void toolNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolNewActionPerformed
+        this.newFile();
+    }//GEN-LAST:event_toolNewActionPerformed
+
+    private void toolQSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolQSaveActionPerformed
+        this.saveAsFile();
+    }//GEN-LAST:event_toolQSaveActionPerformed
+
+    private void toolSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolSaveActionPerformed
+        this.saveFile();
+    }//GEN-LAST:event_toolSaveActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.openFile();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+    public void initializeStartup(){
+        this.newFile();
+        this.disableSaveButtons();
+    }
+    
+    public void enableSaveButtons(){
+        this.buttonSave.setEnabled(true);
+        this.toolQSave.setEnabled(true);
+    }
+    
+    public void disableSaveButtons(){
+        this.buttonSave.setEnabled(false);
+        this.toolQSave.setEnabled(false);
+    }
+    
+    ////ACTIONS
+    private void newFile(){
+        this.editor.setText("");
+        this.setTitle(this.util.getWindowTitle(false, "Untitled"));
+        this.doc.resetIndicators();
+    }
+    
+    private void openFile(){
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
         this.getFileChooser().setFileFilter(filter);
         int state = this.getFileChooser().showOpenDialog(this);
@@ -181,23 +332,20 @@ public class EzNoteFrame extends javax.swing.JFrame {
             }
             this.setTitle(this.util.getWindowTitle(false, this.doc.getFilename()));
         }
-    }//GEN-LAST:event_buttonOpenActionPerformed
-
-    private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
-        this.editor.setText("");
-        this.setTitle(this.util.getWindowTitle(false, "Untitled"));
-        this.doc.resetIndicators();
-    }//GEN-LAST:event_buttonNewActionPerformed
-
-    private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
-        this.fab.setVisible(true);
-    }//GEN-LAST:event_menuAboutMouseClicked
-
-    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+    }
+    
+    private void saveFile(){
         this.doc.saveQ();
         this.doc.resetIndicators();
-    }//GEN-LAST:event_buttonSaveActionPerformed
-
+    }
+    
+    private void saveAsFile(){
+        this.doc.saveAs();
+        this.doc.resetIndicators();
+        this.util.getWindowTitle(true, this.getDocument().getFile().getName());
+    }
+    //////
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem buttonExit;
     private javax.swing.JMenuItem buttonNew;
@@ -206,14 +354,24 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem buttonSaveAs;
     private javax.swing.JTextArea editor;
     private javax.swing.JScrollPane editorPane;
+    private javax.swing.JButton jButton1;
     private javax.swing.JFileChooser jFileChooser1;
-    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar.Separator jSeparator4;
+    private javax.swing.JToolBar.Separator jSeparator5;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu menuAbout;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuSettings;
+    private javax.swing.JButton toolNew;
+    private javax.swing.JButton toolQSave;
+    private javax.swing.JButton toolSave;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
 }
