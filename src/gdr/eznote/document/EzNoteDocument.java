@@ -28,9 +28,7 @@ public class EzNoteDocument implements DocumentListener {
     private Scanner openScanner;
 
     public EzNoteDocument(EzNoteFrame parent) {
-        //init frame utilities for this document to handler display of some things
         this.util = new EzNoteFrameUtil(parent);
-        //sets the documentlistener of the frame handled automatically
         parent.setDocumentListener(this);
         this.parent = parent;
         this.filename = "-1";
