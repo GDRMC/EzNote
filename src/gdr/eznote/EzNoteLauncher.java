@@ -1,5 +1,6 @@
 package gdr.eznote;
 
+import java.awt.Toolkit;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -18,6 +19,8 @@ public class EzNoteLauncher {
         main.setTitle("EzNote - Lightweight txt editor");
         main.setLocationRelativeTo(null);
         main.initializeStartup();
+        main.setIconImage(Toolkit.getDefaultToolkit().getImage(main.getClass().getResource("/gdr/icons/icon.png")));
     }
+    
     
 }
