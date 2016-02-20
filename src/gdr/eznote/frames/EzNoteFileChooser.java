@@ -8,7 +8,7 @@ public class EzNoteFileChooser extends JFileChooser {
 
     public EzNoteFileChooser(JFrame parent, String name) {
         super(name);
-        this.setDialogTitle("Open/Close");
+        this.setDialogTitle("Open/Save");
         this.setVisible(true);
     }
 
