@@ -12,11 +12,11 @@ public class EzNoteFileChooser extends JFileChooser {
         this.setVisible(true);
     }
 
-    public void displayOpen(Component c) {
-        this.showOpenDialog(c);
+    public void displayOpen(Component parent) {
+        this.showOpenDialog(parent);
     }
 
-    public void displayClose(Component c) {
-        this.showSaveDialog(c);
+    public void displayClose(Component parent) {
+        this.showSaveDialog(parent);
     }
 }
