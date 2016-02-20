@@ -86,7 +86,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         menuAbout = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         editor.setColumns(20);
         editor.setRows(5);
@@ -101,7 +101,6 @@ public class EzNoteFrame extends javax.swing.JFrame {
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jToolBar1, org.jdesktop.beansbinding.ELProperty.create("${preferredSize}"), jToolBar1, org.jdesktop.beansbinding.BeanProperty.create("minimumSize"));
         bindingGroup.addBinding(binding);
 
-        jSeparator3.setOrientation(javax.swing.SwingConstants.HORIZONTAL);
         jSeparator3.setToolTipText("");
         jToolBar1.add(jSeparator3);
 
@@ -204,6 +203,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuFile.add(jSeparator1);
 
         buttonExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_MASK));
+        buttonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_exit.png"))); // NOI18N
         buttonExit.setText("Exit");
         buttonExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,9 +216,11 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
         menuSettings.setText("Preferences");
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Appearance");
         menuSettings.add(jMenuItem1);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("Settings");
         menuSettings.add(jMenuItem2);
 
