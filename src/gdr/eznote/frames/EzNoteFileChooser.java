@@ -19,4 +19,5 @@ public class EzNoteFileChooser extends JFileChooser {
     public void displayClose(Component parent) {
         this.showSaveDialog(parent);
     }
+    
 }
