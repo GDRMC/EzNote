@@ -1,9 +1,3 @@
-@@ Upcoming Changes @@
-
-- File save protection when exiting
-
-@@@@@@@@@@@@@@@@@@@@@@
-
 ===  Next-  ===
 
 - Basic quick-save function
@@ -11,6 +5,7 @@
 - Icons and shortcuts in "File" menu
 - Core rework (open/save/saveas) & simplification
 - File change listeners with visual indicator
+- File save protection when exiting
 
 ===============
 
