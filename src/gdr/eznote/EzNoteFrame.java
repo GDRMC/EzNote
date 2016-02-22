@@ -273,7 +273,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuFile.add(buttonSaveAs);
         menuFile.add(jSeparator1);
 
-        buttonExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_MASK));
+        buttonExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         buttonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_exit.png"))); // NOI18N
         buttonExit.setText("Exit");
         buttonExit.addActionListener(new java.awt.event.ActionListener() {
