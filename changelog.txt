@@ -1,4 +1,4 @@
-===  Next-  ===
+=== v0.002d ===
 
 - Basic quick-save function
 - Menu bar with icons
