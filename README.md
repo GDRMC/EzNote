@@ -9,20 +9,22 @@ WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILE
 The wiki is currently under development.
 
 ##Features
-* Open a file within the editor
-* Save a file within the editor (save as... like), quick save is not supported YET
+* Basic quick-save function
+* Menu bar with icons
+* Icons and shortcuts in "File" menu
+* Core rework (open/save/saveas) & simplification
+* File change listeners with visual indicator
+* File save protection when exiting
+* Basic "Save as" function
+* Basic "Open" function
 * New file feature
 * Filename in the window title
 * Extension corrector (.* > .*.txt) for every saved file
-* 
+
 See the full [CHANGELOG](https://raw.githubusercontent.com/GDRMC/EzNote/master/changelog.txt)
 
 ##TODO List
-* Core rework
-* Hotkeys for existing features
-* Quick-save via menu
-* Save changes prompt when exiting
-* Tabbed editor (code rework needed !)
+* Tabbed editor (another code rework needed !)
 * Customization
 
 ##Release (antichronological order) - No full release build for now
