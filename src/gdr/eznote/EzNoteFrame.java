@@ -394,7 +394,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
     
     private void saveAsFile(){
         this.doc.saveAs();
-        this.util.getWindowTitle(true, this.getDocument().getFile().getName());
+        
     }
     //////
     
