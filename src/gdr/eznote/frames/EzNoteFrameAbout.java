@@ -6,15 +6,26 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+/**
+ *
+ * @author GDR
+ */
 public class EzNoteFrameAbout extends javax.swing.JFrame {
 
     String changelog;
     
+    /**
+     *
+     */
     public EzNoteFrameAbout() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
     
+    /**
+     *
+     * @return
+     */
     public String getChangelogText() {
         try {
             URL url = new URL("https://raw.githubusercontent.com/GDRMC/EzNote/master/changelog.txt");

@@ -15,7 +15,7 @@ public class EzNoteWindowAdapter extends WindowAdapter{
     private EzNoteFrame parent;
     
     /**
-     * Constructor with parent reference
+     * Constructor with parent to listen
      * @param parent EzNoteFrame
      */
     public EzNoteWindowAdapter(EzNoteFrame parent) {
@@ -51,6 +51,7 @@ public class EzNoteWindowAdapter extends WindowAdapter{
                 System.exit(1);
             }
         } else {
+            System.out.println(this.parent.getSize());
             System.exit(0);
         }
     }

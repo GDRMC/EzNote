@@ -7,12 +7,14 @@ import gdr.eznote.frames.EzNoteFileChooser;
 import gdr.eznote.frames.EzNoteFrameAbout;
 import gdr.eznote.util.EzNoteFrameUtil;
 import gdr.eznote.util.EzNoteWindowAdapter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JTextArea;
 
+/**
+ * Main Editor frame
+ * @author GDR
+ */
 public class EzNoteFrame extends javax.swing.JFrame {
 
     private EzNoteFileChooser fc;
@@ -21,6 +23,9 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private EzNoteDocument doc;
     private EzNoteWindowAdapter wlis;
 
+    /**
+     * Constructor and manual components init
+     */
     public EzNoteFrame() {
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
@@ -34,26 +39,51 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.addWindowListener(wlis);
     }
 
+    /**
+     * Set the document listener of the window
+     * @param dc EzNoteDocumentListener
+     */
+    
     public void setDocumentListener(EzNoteDocument dc) {
         this.editor.getDocument().addDocumentListener(dc);
     }
 
+    /**
+     * Returns the frame utilities class
+     * @return EzNoteFrameUtil
+     */
     public EzNoteFrameUtil getUtilities() {
         return this.util;
     }
 
+    /**
+     * Returns the filechooser of the window
+     * @return EzNoteFileChooser
+     */
     public EzNoteFileChooser getFileChooser() {
         return this.fc;
     }
 
+    /**
+     * Returns the document of the window
+     * @return EzNoteDocument
+     */
     public EzNoteDocument getDocument() {
         return this.doc;
     }
 
+    /**
+     * Returns the filename of the current document
+     * @return String filename of the current document
+     */
     public String getFilename() {
         return this.doc.getFile().getName();
     }
 
+    /**
+     * Returns the Editor component
+     * @return JTextArea of the main frame
+     */
     public JTextArea getEditor() {
         return this.editor;
     }
@@ -363,20 +393,30 @@ public class EzNoteFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Initialize a new file while the program is starting, and locks the quick
+     * save buttons
+     */
     public void initializeStartup() {
         this.newFile();
         this.disableSaveButtons();
     }
 
+    /**
+     * Enables save buttons
+     * @deprecated Will not support disabled buttons anymore
+     */
     @Deprecated
-    //not supporting disabled save buttons anymore
     public void enableSaveButtons() {
         this.buttonQSave.setEnabled(true);
         this.toolQSave.setEnabled(true);
     }
 
+    /**
+     * Disables save buttons
+     * @deprecated Will not support disabled buttons anymore
+     */
     @Deprecated
-    //not supporting disabled save buttons anymore
     public void disableSaveButtons() {
         this.buttonQSave.setEnabled(false);
         this.toolQSave.setEnabled(false);
