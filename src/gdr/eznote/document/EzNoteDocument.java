@@ -19,8 +19,10 @@ public class EzNoteDocument implements DocumentListener {
 
     private EzNoteFrameUtil util;
     private EzNoteFrame parent;
+    
     private int changeCounter;
     private boolean changeIndicator;
+    private boolean fresh;
 
     private File file;
     private String filename;
@@ -31,7 +33,7 @@ public class EzNoteDocument implements DocumentListener {
         this.util = new EzNoteFrameUtil(parent);
         parent.setDocumentListener(this);
         this.parent = parent;
-        this.filename = "-1";
+        this.fresh = true;
     }
 
     public EzNoteFrameUtil getUtilities() {
@@ -46,25 +48,33 @@ public class EzNoteDocument implements DocumentListener {
         return this.filename;
     }
 
-    public boolean open(File f, EzNoteFileChooser fc, int state) throws FileNotFoundException {
+    public boolean open() throws FileNotFoundException {
+        //process booleans
         boolean complete = false;
         boolean empty;
+        //filechooser filter update
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
         this.parent.getFileChooser().setFileFilter(filter);
-        this.openScanner = new Scanner(f);
+        //filechooser display with state getter
+        int state = this.parent.getFileChooser().showSaveDialog(parent);
+        //if the file has been successfully selected by the user within the GUI
         if (state == JFileChooser.APPROVE_OPTION) {
+            //detect if the file is empty or not
             try {
-                this.parent.getEditor().setText(openScanner.useDelimiter("\\Z").next());
+                openScanner = new Scanner(this.parent.getFileChooser().getSelectedFile());
+                openScanner.useDelimiter("\\Z").next();
                 empty = false;
             } catch (NoSuchElementException e) {
                 System.out.println("Selected file is empty");
                 empty = true;
             }
+            //get the selected file and change the current editing file in the class
             this.file = this.parent.getFileChooser().getSelectedFile();
             this.filename = this.parent.getFileChooser().getSelectedFile().getName();
             this.parent.setTitle(util.getWindowTitle(true, this.file.getName()));
+            //if the file is not empty, load the content in the editor
             if(!empty){
-                Scanner openScannerLoad = new Scanner(f).useDelimiter("\\Z");
+                Scanner openScannerLoad = new Scanner(this.file).useDelimiter("\\Z");
                 this.parent.getEditor().setText(openScannerLoad.next());
                 complete = true;
                 this.resetIndicators();
@@ -73,6 +83,7 @@ public class EzNoteDocument implements DocumentListener {
                 complete = true;
                 this.resetIndicators();
             }
+        //if the user closed the window without selecting any file, or cancelled the operation
         } else {
             System.out.println("Unable to load file");
             complete = false;
@@ -80,6 +91,7 @@ public class EzNoteDocument implements DocumentListener {
         this.debugChange();
         this.openScanner.close();
         if(complete){
+            //reset changes indicator if the file has been successfully loaded
             this.resetIndicators();
         }
         return complete;
@@ -89,7 +101,7 @@ public class EzNoteDocument implements DocumentListener {
         boolean saved = false;
         PrintWriter writer;
         if (this.isFileChanged()) {
-            if (!"-1".equals(this.filename)){
+            if (this.filename == null){
                 if(this.file.exists()){
                     try {
                         writer = new PrintWriter(file);
