@@ -101,7 +101,7 @@ public class EzNoteDocument implements DocumentListener {
         boolean saved = false;
         PrintWriter writer;
         if (this.isFileChanged()) {
-            if (this.filename == null){
+            if (this.filename != null){
                 if(this.file.exists()){
                     try {
                         writer = new PrintWriter(file);

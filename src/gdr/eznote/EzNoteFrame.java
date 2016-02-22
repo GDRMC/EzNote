@@ -330,7 +330,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
     private void toolQSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolQSaveActionPerformed
         try {
-            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_QSAVE);
+            EzNoteChangeValidator.validateAction(doc, EzNoteChangeValidator.FILE_QSAVE);
         } catch (BadValidationException ex) {
             ex.printStackTrace();
         } catch (FileNotFoundException ex) {
