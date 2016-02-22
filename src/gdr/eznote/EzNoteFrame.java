@@ -124,6 +124,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuAbout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(540, 300));
 
         editor.setColumns(20);
         editor.setRows(5);
