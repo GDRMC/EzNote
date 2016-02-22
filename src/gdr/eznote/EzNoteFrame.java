@@ -6,53 +6,58 @@ import gdr.eznote.exceptions.BadValidationException;
 import gdr.eznote.frames.EzNoteFileChooser;
 import gdr.eznote.frames.EzNoteFrameAbout;
 import gdr.eznote.util.EzNoteFrameUtil;
+import gdr.eznote.util.EzNoteWindowAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JTextArea;
 
 public class EzNoteFrame extends javax.swing.JFrame {
-    
+
     private EzNoteFileChooser fc;
     private EzNoteFrameAbout fab;
     private EzNoteFrameUtil util;
     private EzNoteDocument doc;
+    private EzNoteWindowAdapter wlis;
 
     public EzNoteFrame() {
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
-        this.fc = new EzNoteFileChooser(this,"test");
+        this.fc = new EzNoteFileChooser(this, "test");
         this.fc.setFileFilter(filter);
         this.fab = new EzNoteFrameAbout();
         this.fab.dispose();
         this.util = new EzNoteFrameUtil(this);
         this.doc = new EzNoteDocument(this);
+        this.wlis = new EzNoteWindowAdapter(this);
+        this.addWindowListener(wlis);
     }
-    
-    public void setDocumentListener(EzNoteDocument dc){
+
+    public void setDocumentListener(EzNoteDocument dc) {
         this.editor.getDocument().addDocumentListener(dc);
     }
-    
-    public EzNoteFrameUtil getUtilities(){
+
+    public EzNoteFrameUtil getUtilities() {
         return this.util;
     }
-    
-    public EzNoteFileChooser getFileChooser(){
+
+    public EzNoteFileChooser getFileChooser() {
         return this.fc;
     }
-    
-    public EzNoteDocument getDocument(){
+
+    public EzNoteDocument getDocument() {
         return this.doc;
     }
-    
-    public String getFilename(){
+
+    public String getFilename() {
         return this.doc.getFile().getName();
     }
 
-    public JTextArea getEditor(){
+    public JTextArea getEditor() {
         return this.editor;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -294,7 +299,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
-        if(isValid){
+        if (isValid) {
             this.newFile();
         }
     }//GEN-LAST:event_buttonNewActionPerformed
@@ -323,7 +328,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
-        if(isValid){
+        if (isValid) {
             this.newFile();
         }
     }//GEN-LAST:event_toolNewActionPerformed
@@ -358,46 +363,47 @@ public class EzNoteFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void initializeStartup(){
+    public void initializeStartup() {
         this.newFile();
         this.disableSaveButtons();
     }
-    
+
     @Deprecated
     //not supporting disabled save buttons anymore
-    public void enableSaveButtons(){
+    public void enableSaveButtons() {
         this.buttonQSave.setEnabled(true);
         this.toolQSave.setEnabled(true);
     }
-    
+
     @Deprecated
     //not supporting disabled save buttons anymore
-    public void disableSaveButtons(){
+    public void disableSaveButtons() {
         this.buttonQSave.setEnabled(false);
         this.toolQSave.setEnabled(false);
     }
-    
+
     ////ACTIONS
-    private void newFile(){
+    private void newFile() {
         this.editor.setText("");
         this.setTitle(this.util.getWindowTitle(false, "Untitled"));
         this.doc.resetIndicators();
     }
-    
-    private void openFile() throws FileNotFoundException{
+
+    private void openFile() throws FileNotFoundException {
         this.doc.open();
     }
-    
-    private void saveFile(){
+
+    private void saveFile() {
         this.doc.saveQ();
     }
-    
-    private void saveAsFile(){
+
+    private void saveAsFile() {
         this.doc.saveAs();
-        
+
     }
     //////
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem buttonExit;
     private javax.swing.JMenuItem buttonNew;
