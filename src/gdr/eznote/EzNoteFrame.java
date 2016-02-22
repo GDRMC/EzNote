@@ -7,6 +7,7 @@ import gdr.eznote.frames.EzNoteFileChooser;
 import gdr.eznote.frames.EzNoteFrameAbout;
 import gdr.eznote.util.EzNoteFrameUtil;
 import gdr.eznote.util.EzNoteWindowAdapter;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JTextArea;
@@ -37,6 +38,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.doc = new EzNoteDocument(this);
         this.wlis = new EzNoteWindowAdapter(this);
         this.addWindowListener(wlis);
+        this.themeApplyToolbar(Color.lightGray);
     }
 
     /**
@@ -88,6 +90,14 @@ public class EzNoteFrame extends javax.swing.JFrame {
         return this.editor;
     }
 
+    public void themeApplyToolbar(Color background){
+        this.jToolBar1.setBackground(background);
+        this.toolNew.setBackground(background);
+        this.toolQSave.setBackground(background);
+        this.toolSaveAs.setBackground(background);
+        this.toolOpen.setBackground(background);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -105,7 +115,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JToolBar.Separator();
         toolNew = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JToolBar.Separator();
-        jButton1 = new javax.swing.JButton();
+        toolOpen = new javax.swing.JButton();
         toolQSave = new javax.swing.JButton();
         toolSaveAs = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
@@ -130,10 +140,12 @@ public class EzNoteFrame extends javax.swing.JFrame {
         editor.setRows(5);
         editorPane.setViewportView(editor);
 
+        jToolBar1.setBackground(new java.awt.Color(204, 204, 204));
         jToolBar1.setBorder(null);
         jToolBar1.setFloatable(false);
         jToolBar1.setForeground(new java.awt.Color(0, 0, 0));
-        jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
+        jToolBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jToolBar1.setMaximumSize(new java.awt.Dimension(1000000, 32));
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jToolBar1, org.jdesktop.beansbinding.ELProperty.create("${preferredSize}"), jToolBar1, org.jdesktop.beansbinding.BeanProperty.create("minimumSize"));
@@ -143,13 +155,15 @@ public class EzNoteFrame extends javax.swing.JFrame {
         jToolBar1.add(jSeparator3);
 
         toolNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_newfile.png"))); // NOI18N
+        toolNew.setToolTipText("New File");
         toolNew.setAlignmentX(0.5F);
-        toolNew.setBorder(null);
+        toolNew.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         toolNew.setFocusable(false);
         toolNew.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         toolNew.setMaximumSize(new java.awt.Dimension(28, 28));
         toolNew.setMinimumSize(new java.awt.Dimension(28, 28));
         toolNew.setPreferredSize(new java.awt.Dimension(28, 28));
+        toolNew.setRolloverEnabled(true);
         toolNew.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         toolNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,23 +173,35 @@ public class EzNoteFrame extends javax.swing.JFrame {
         jToolBar1.add(toolNew);
         jToolBar1.add(jSeparator5);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_openfile.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        toolOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_openfile.png"))); // NOI18N
+        toolOpen.setToolTipText("Open File");
+        toolOpen.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        toolOpen.setBorderPainted(false);
+        toolOpen.setFocusable(false);
+        toolOpen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        toolOpen.setMaximumSize(new java.awt.Dimension(28, 28));
+        toolOpen.setMinimumSize(new java.awt.Dimension(28, 28));
+        toolOpen.setPreferredSize(new java.awt.Dimension(28, 28));
+        toolOpen.setRolloverEnabled(true);
+        toolOpen.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                toolOpenActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton1);
+        jToolBar1.add(toolOpen);
 
         toolQSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile.png"))); // NOI18N
+        toolQSave.setToolTipText("Quicksave current file");
+        toolQSave.setAlignmentX(0.5F);
+        toolQSave.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         toolQSave.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile_disabled.png"))); // NOI18N
         toolQSave.setEnabled(false);
         toolQSave.setFocusable(false);
         toolQSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        toolQSave.setMaximumSize(new java.awt.Dimension(28, 28));
+        toolQSave.setMinimumSize(new java.awt.Dimension(28, 28));
+        toolQSave.setPreferredSize(new java.awt.Dimension(28, 28));
         toolQSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         toolQSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,8 +211,15 @@ public class EzNoteFrame extends javax.swing.JFrame {
         jToolBar1.add(toolQSave);
 
         toolSaveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_saveasfile.png"))); // NOI18N
+        toolSaveAs.setToolTipText("Save file as...");
+        toolSaveAs.setAlignmentX(0.5F);
+        toolSaveAs.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         toolSaveAs.setFocusable(false);
         toolSaveAs.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        toolSaveAs.setMaximumSize(new java.awt.Dimension(28, 28));
+        toolSaveAs.setMinimumSize(new java.awt.Dimension(28, 28));
+        toolSaveAs.setPreferredSize(new java.awt.Dimension(28, 28));
+        toolSaveAs.setRolloverEnabled(true);
         toolSaveAs.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         toolSaveAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,8 +321,8 @@ public class EzNoteFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE)
-                .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -384,7 +417,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_toolSaveAsActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void toolOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolOpenActionPerformed
         try {
             EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_OPEN);
         } catch (BadValidationException ex) {
@@ -392,7 +425,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_toolOpenActionPerformed
 
     /**
      * Initialize a new file while the program is starting, and locks the quick
@@ -453,7 +486,6 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem buttonSaveAs;
     private javax.swing.JTextArea editor;
     private javax.swing.JScrollPane editorPane;
-    private javax.swing.JButton jButton1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -468,6 +500,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuSettings;
     private javax.swing.JButton toolNew;
+    private javax.swing.JButton toolOpen;
     private javax.swing.JButton toolQSave;
     private javax.swing.JButton toolSaveAs;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
