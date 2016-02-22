@@ -1,6 +1,8 @@
 package gdr.eznote;
 
+import gdr.eznote.document.EzNoteChangeValidator;
 import gdr.eznote.document.EzNoteDocument;
+import gdr.eznote.exceptions.BadValidationException;
 import gdr.eznote.frames.EzNoteFileChooser;
 import gdr.eznote.frames.EzNoteFrameAbout;
 import gdr.eznote.util.EzNoteFrameUtil;
@@ -70,14 +72,14 @@ public class EzNoteFrame extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JToolBar.Separator();
         jButton1 = new javax.swing.JButton();
         toolQSave = new javax.swing.JButton();
-        toolSave = new javax.swing.JButton();
+        toolSaveAs = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         buttonNew = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         buttonOpen = new javax.swing.JMenuItem();
-        buttonSave = new javax.swing.JMenuItem();
+        buttonQSave = new javax.swing.JMenuItem();
         buttonSaveAs = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         buttonExit = new javax.swing.JMenuItem();
@@ -86,7 +88,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         menuAbout = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         editor.setColumns(20);
         editor.setRows(5);
@@ -101,7 +103,6 @@ public class EzNoteFrame extends javax.swing.JFrame {
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jToolBar1, org.jdesktop.beansbinding.ELProperty.create("${preferredSize}"), jToolBar1, org.jdesktop.beansbinding.BeanProperty.create("minimumSize"));
         bindingGroup.addBinding(binding);
 
-        jSeparator3.setOrientation(javax.swing.SwingConstants.HORIZONTAL);
         jSeparator3.setToolTipText("");
         jToolBar1.add(jSeparator3);
 
@@ -147,16 +148,16 @@ public class EzNoteFrame extends javax.swing.JFrame {
         });
         jToolBar1.add(toolQSave);
 
-        toolSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_saveasfile.png"))); // NOI18N
-        toolSave.setFocusable(false);
-        toolSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        toolSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolSave.addActionListener(new java.awt.event.ActionListener() {
+        toolSaveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_saveasfile.png"))); // NOI18N
+        toolSaveAs.setFocusable(false);
+        toolSaveAs.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        toolSaveAs.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolSaveAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                toolSaveActionPerformed(evt);
+                toolSaveAsActionPerformed(evt);
             }
         });
-        jToolBar1.add(toolSave);
+        jToolBar1.add(toolSaveAs);
         jToolBar1.add(jSeparator4);
 
         menuFile.setText("File");
@@ -182,16 +183,16 @@ public class EzNoteFrame extends javax.swing.JFrame {
         });
         menuFile.add(buttonOpen);
 
-        buttonSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        buttonSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile.png"))); // NOI18N
-        buttonSave.setText("Save");
-        buttonSave.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile_disabled.png"))); // NOI18N
-        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+        buttonQSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        buttonQSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile.png"))); // NOI18N
+        buttonQSave.setText("Save");
+        buttonQSave.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_savefile_disabled.png"))); // NOI18N
+        buttonQSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSaveActionPerformed(evt);
+                buttonQSaveActionPerformed(evt);
             }
         });
-        menuFile.add(buttonSave);
+        menuFile.add(buttonQSave);
 
         buttonSaveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_saveasfile.png"))); // NOI18N
         buttonSaveAs.setText("Save As...");
@@ -204,6 +205,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuFile.add(jSeparator1);
 
         buttonExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_MASK));
+        buttonExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_exit.png"))); // NOI18N
         buttonExit.setText("Exit");
         buttonExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,9 +218,11 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
         menuSettings.setText("Preferences");
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Appearance");
         menuSettings.add(jMenuItem1);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("Settings");
         menuSettings.add(jMenuItem2);
 
@@ -262,54 +266,114 @@ public class EzNoteFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonExitActionPerformed
 
     private void buttonSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveAsActionPerformed
-        this.saveAsFile();
+        try {
+            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_SAVEAS);
+        } catch (BadValidationException ex) {
+            ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_buttonSaveAsActionPerformed
 
     private void buttonOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenActionPerformed
-        this.openFile();
+        try {
+            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_OPEN);
+        } catch (BadValidationException ex) {
+            ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_buttonOpenActionPerformed
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
-        this.newFile();
+        boolean isValid = false;
+        try {
+            isValid = EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_NEW);
+        } catch (BadValidationException ex) {
+            ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        if(isValid){
+            this.newFile();
+        }
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
         this.fab.setVisible(true);
     }//GEN-LAST:event_menuAboutMouseClicked
 
-    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+    private void buttonQSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonQSaveActionPerformed
+        try {
+            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_QSAVE);
+        } catch (BadValidationException ex) {
+            ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
         this.saveFile();
-    }//GEN-LAST:event_buttonSaveActionPerformed
+    }//GEN-LAST:event_buttonQSaveActionPerformed
 
     private void toolNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolNewActionPerformed
-        this.newFile();
+        boolean isValid = false;
+        try {
+            isValid = EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_NEW);
+        } catch (BadValidationException ex) {
+            ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        if(isValid){
+            this.newFile();
+        }
     }//GEN-LAST:event_toolNewActionPerformed
 
     private void toolQSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolQSaveActionPerformed
-        this.saveAsFile();
+        try {
+            EzNoteChangeValidator.validateAction(doc, EzNoteChangeValidator.FILE_QSAVE);
+        } catch (BadValidationException ex) {
+            ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_toolQSaveActionPerformed
 
-    private void toolSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolSaveActionPerformed
-        this.saveFile();
-    }//GEN-LAST:event_toolSaveActionPerformed
+    private void toolSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolSaveAsActionPerformed
+        try {
+            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_SAVEAS);
+        } catch (BadValidationException ex) {
+            ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_toolSaveAsActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.openFile();
+        try {
+            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_OPEN);
+        } catch (BadValidationException ex) {
+            ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
     public void initializeStartup(){
         this.newFile();
         this.disableSaveButtons();
     }
     
+    @Deprecated
+    //not supporting disabled save buttons anymore
     public void enableSaveButtons(){
-        this.buttonSave.setEnabled(true);
+        this.buttonQSave.setEnabled(true);
         this.toolQSave.setEnabled(true);
     }
     
+    @Deprecated
+    //not supporting disabled save buttons anymore
     public void disableSaveButtons(){
-        this.buttonSave.setEnabled(false);
+        this.buttonQSave.setEnabled(false);
         this.toolQSave.setEnabled(false);
     }
     
@@ -320,28 +384,16 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.doc.resetIndicators();
     }
     
-    private void openFile(){
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
-        this.getFileChooser().setFileFilter(filter);
-        int state = this.getFileChooser().showOpenDialog(this);
-        if(this.getFileChooser().getSelectedFile().exists() && this.getFileChooser().getSelectedFile().isFile()){
-            try {
-                this.doc.open(this.getFileChooser().getSelectedFile(), this.getFileChooser(), state);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.setTitle(this.util.getWindowTitle(false, this.doc.getFilename()));
-        }
+    private void openFile() throws FileNotFoundException{
+        this.doc.open();
     }
     
     private void saveFile(){
         this.doc.saveQ();
-        this.doc.resetIndicators();
     }
     
     private void saveAsFile(){
         this.doc.saveAs();
-        this.doc.resetIndicators();
         this.util.getWindowTitle(true, this.getDocument().getFile().getName());
     }
     //////
@@ -350,7 +402,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem buttonExit;
     private javax.swing.JMenuItem buttonNew;
     private javax.swing.JMenuItem buttonOpen;
-    private javax.swing.JMenuItem buttonSave;
+    private javax.swing.JMenuItem buttonQSave;
     private javax.swing.JMenuItem buttonSaveAs;
     private javax.swing.JTextArea editor;
     private javax.swing.JScrollPane editorPane;
@@ -370,7 +422,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private javax.swing.JMenu menuSettings;
     private javax.swing.JButton toolNew;
     private javax.swing.JButton toolQSave;
-    private javax.swing.JButton toolSave;
+    private javax.swing.JButton toolSaveAs;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
