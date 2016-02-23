@@ -8,7 +8,8 @@ This project (french: pronounce "izinote") is made to be a future lightweight an
 WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILES, I CAN NOT BE RESPONSIBLE OF ANY PROBLEM RELATED TO THE USE YOU MAKE OF THIS PROGRAM
 
 ##[WIKI](https://github.com/GDRMC/EzNote/wiki)
-The wiki is currently under development, but there's the basics.
+
+##[RAW CHANGELOG](https://raw.githubusercontent.com/GDRMC/EzNote/master/changelog.txt)
 
 ##Features
 * Basic quick-save function
@@ -22,8 +23,8 @@ The wiki is currently under development, but there's the basics.
 * New file feature
 * Filename in the window title
 * Extension corrector (.* > .*.txt) for every saved file
-
-See the full [CHANGELOG](https://raw.githubusercontent.com/GDRMC/EzNote/master/changelog.txt)
+* (WIP) Customization fonctions
+* (WIP) Configuration files
 
 ##TODO List
 * Tabbed editor (another code rework needed !)
