@@ -1,20 +1,21 @@
-=== v0.002d ===
+=== Next v. ===
+- Customization
+- Bugfixes
+===============
 
+=== v0.002d ===
 - Basic quick-save function
 - Menu bar with icons
 - Icons and shortcuts in "File" menu
 - Core rework (open/save/saveas) & simplification
 - File change listeners with visual indicator
 - File save protection when exiting
-
 ===============
 
 === v0.001d ===
-
 - Basic "Save as" function
 - Basic "Open" function
 - New file feature
 - Filename in the window title
 - Extension corrector (.* > .*.txt) for every saved file
-
 ===============
