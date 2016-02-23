@@ -1,5 +1,5 @@
 # EzNote
-Lightweight notepad project. Version: 0.002d (dev)
+Lightweight notepad project. Version: 0.003d (prerelease) (dev)
 
 ![Screenshot 1](http://puu.sh/niNXR/d3a3bd0d73.png)
 
@@ -28,9 +28,11 @@ WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILE
 
 ##TODO List
 * Tabbed editor (another code rework needed !)
-* Customization (WIP)
+* Customization
+* Configuration files
 
 ##Release (antichronological order) - No full release build for now
+* [0.003d - Pre-release v0.003_rev0 (commit 104)](https://github.com/GDRMC/EzNote/releases/tag/v0.003d))
 * [0.002d - Pre-release v0.002_rev1 (commit 82)](https://github.com/GDRMC/EzNote/releases/tag/v0.002d)
 * [0.001d - First development release](https://github.com/GDRMC/EzNote/releases/tag/v0.001d)
 
