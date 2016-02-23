@@ -8,6 +8,9 @@ This project (french: pronounce "izinote") is made to be a future lightweight an
 WORK IN PROGRESS - USE THIS PROJECT AS YOUR OWN RISKS WITH USELESS/TEST TXT FILES, I CAN NOT BE RESPONSIBLE OF ANY PROBLEM RELATED TO THE USE YOU MAKE OF THIS PROGRAM
 
 ##[WIKI](https://github.com/GDRMC/EzNote/wiki)
+[HOMEPAGE](https://github.com/GDRMC/EzNote/wiki)
+[Getting started](https://github.com/GDRMC/EzNote/wiki/Getting-started-!)
+[Theme tutorial](https://github.com/GDRMC/EzNote/wiki/Applying-a-theme)
 
 ##[RAW CHANGELOG](https://raw.githubusercontent.com/GDRMC/EzNote/master/changelog.txt)
 
