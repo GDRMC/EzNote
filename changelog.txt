@@ -1,6 +1,16 @@
 === Next v. ===
-- Customization
+- Configuration file
 - Bugfixes
+===============
+
+=== v0.003d ===
+- Basic customization options
+ -| Program defined themes
+ -| Custom themes using 3 parameters
+- New Appearance GUI
+- Color display for main frame components
+- Bugfixes
+ -| 2 bugs fixed (1 critical)
 ===============
 
 === v0.002d ===
