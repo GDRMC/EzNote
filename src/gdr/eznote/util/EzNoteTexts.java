@@ -14,7 +14,7 @@ public enum EzNoteTexts {
     /**
      * Version number
      */
-    SOFTWARE_VERSION("0.001d"),
+    SOFTWARE_VERSION("v0.002d"),
 
     /**
      * String separator (for title only)

@@ -4,13 +4,40 @@ import gdr.eznote.exceptions.BadValidationException;
 import java.io.FileNotFoundException;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author GDR
+ */
 public class EzNoteChangeValidator {
 
+    /**
+     *
+     */
     public static final int FILE_OPEN = 0;
+
+    /**
+     *
+     */
     public static final int FILE_QSAVE = 1;
+
+    /**
+     *
+     */
     public static final int FILE_SAVEAS = 2;
+
+    /**
+     *
+     */
     public static final int FILE_NEW = 3;
 
+    /**
+     *
+     * @param parent
+     * @param action
+     * @return
+     * @throws BadValidationException
+     * @throws FileNotFoundException
+     */
     public static boolean validateAction(EzNoteDocument parent, int action) throws BadValidationException, FileNotFoundException {
         boolean ok = false;
         boolean execute = true;

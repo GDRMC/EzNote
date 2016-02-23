@@ -15,6 +15,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * Document class implementing document listener in the main frame window
+ * @author GDR
+ */
 public class EzNoteDocument implements DocumentListener {
 
     private EzNoteFrameUtil util;
@@ -29,6 +33,10 @@ public class EzNoteDocument implements DocumentListener {
     
     private Scanner openScanner;
 
+    /**
+     * Constructor
+     * @param parent EzNoteFrame parent window
+     */
     public EzNoteDocument(EzNoteFrame parent) {
         this.util = new EzNoteFrameUtil(parent);
         parent.setDocumentListener(this);
@@ -36,30 +44,42 @@ public class EzNoteDocument implements DocumentListener {
         this.fresh = true;
     }
 
+    /**
+     * Returns the utilities
+     * @return EzNoteFrameUtil
+     */
     public EzNoteFrameUtil getUtilities() {
         return this.util;
     }
 
+    /**
+     * Returns the current file loaded
+     * @return current loaded file
+     */
     public File getFile() {
         return this.file;
     }
     
+    /**
+     * Returns the current filename of the file loaded
+     * @return filename of the current file
+     */
     public String getFilename() {
         return this.filename;
     }
 
+    /**
+     * Open a new file
+     * @return success
+     * @throws FileNotFoundException
+     */
     public boolean open() throws FileNotFoundException {
-        //process booleans
         boolean complete = false;
         boolean empty;
-        //filechooser filter update
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
         this.parent.getFileChooser().setFileFilter(filter);
-        //filechooser display with state getter
         int state = this.parent.getFileChooser().showSaveDialog(parent);
-        //if the file has been successfully selected by the user within the GUI
         if (state == JFileChooser.APPROVE_OPTION) {
-            //detect if the file is empty or not
             try {
                 openScanner = new Scanner(this.parent.getFileChooser().getSelectedFile());
                 openScanner.useDelimiter("\\Z").next();
@@ -68,11 +88,9 @@ public class EzNoteDocument implements DocumentListener {
                 System.out.println("Selected file is empty");
                 empty = true;
             }
-            //get the selected file and change the current editing file in the class
             this.file = this.parent.getFileChooser().getSelectedFile();
             this.filename = this.parent.getFileChooser().getSelectedFile().getName();
             this.parent.setTitle(util.getWindowTitle(true, this.file.getName()));
-            //if the file is not empty, load the content in the editor
             if(!empty){
                 Scanner openScannerLoad = new Scanner(this.file).useDelimiter("\\Z");
                 this.parent.getEditor().setText(openScannerLoad.next());
@@ -83,7 +101,6 @@ public class EzNoteDocument implements DocumentListener {
                 complete = true;
                 this.resetIndicators();
             }
-        //if the user closed the window without selecting any file, or cancelled the operation
         } else {
             System.out.println("Unable to load file");
             complete = false;
@@ -91,12 +108,15 @@ public class EzNoteDocument implements DocumentListener {
         this.debugChange();
         this.openScanner.close();
         if(complete){
-            //reset changes indicator if the file has been successfully loaded
             this.resetIndicators();
         }
         return complete;
     }
 
+    /**
+     * Quicksave a file
+     * @return success
+     */
     public boolean saveQ() {
         boolean saved = false;
         PrintWriter writer;
@@ -118,7 +138,6 @@ public class EzNoteDocument implements DocumentListener {
                     }
                 }
             } else {
-                //if the file is untitled and not saved
                 boolean operation = this.saveAs();
                 if (operation) {
                     saved = true;
@@ -132,6 +151,10 @@ public class EzNoteDocument implements DocumentListener {
         return saved;
     }
 
+    /**
+     * Save as method
+     * @return success
+     */
     public boolean saveAs() {
         boolean complete = false;
         int state = this.parent.getFileChooser().showSaveDialog(parent);
@@ -196,6 +219,10 @@ public class EzNoteDocument implements DocumentListener {
         this.fireUpdateEvent();
     }
     
+    /**
+     * Automatically fired by listeners to update the change counter of the file
+     * This can be fired manually
+     */
     private void fireUpdateEvent(){
         this.changeIndicator = true;
         this.changeCounter++;
@@ -203,10 +230,16 @@ public class EzNoteDocument implements DocumentListener {
         this.parent.enableSaveButtons();
     }
 
+    /**
+     * Displays change indicators of the file in the console
+     */
     public void debugChange() {
         System.out.println("EzFrameDL ch > " + this.getChangeIndicator() + " - " + this.getChangeCounter());
     }
 
+    /**
+     * Updates the title of the window depending of the filename
+     */
     public void updateTitle() {
         if (this.file != null) {
             this.parent.setTitle(this.parent.getUtilities().getWindowTitle(true, this.filename));
@@ -217,7 +250,6 @@ public class EzNoteDocument implements DocumentListener {
 
     /**
      * Returns the change counter of the document
-     *
      * @return int counter change
      */
     public int getChangeCounter() {
@@ -226,7 +258,6 @@ public class EzNoteDocument implements DocumentListener {
 
     /**
      * Returns the change indicator of the document
-     *
      * @return boolean change indicator
      */
     public boolean getChangeIndicator() {
@@ -235,7 +266,6 @@ public class EzNoteDocument implements DocumentListener {
 
     /**
      * Returns if the file has been changed or not
-     *
      * @return boolean file changed ?
      */
     public boolean isFileChanged() {
@@ -244,7 +274,6 @@ public class EzNoteDocument implements DocumentListener {
 
     /**
      * Returns the parent window of the listener
-     *
      * @return parent window
      */
     public EzNoteFrame getParent() {

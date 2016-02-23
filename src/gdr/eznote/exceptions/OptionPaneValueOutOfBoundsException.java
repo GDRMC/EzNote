@@ -4,13 +4,13 @@ package gdr.eznote.exceptions;
  *
  * @author GDR
  */
-public class BadValidationException extends Exception {
+public class OptionPaneValueOutOfBoundsException extends Exception {
     
     /**
      *
      * @param message
      */
-    public BadValidationException(String message) { 
+    public OptionPaneValueOutOfBoundsException(String message) { 
         super(message); 
     }
 
@@ -19,7 +19,7 @@ public class BadValidationException extends Exception {
      * @param message
      * @param cause
      */
-    public BadValidationException(String message, Throwable cause) { 
+    public OptionPaneValueOutOfBoundsException(String message, Throwable cause) { 
         super(message, cause); 
     }
 
@@ -27,7 +27,7 @@ public class BadValidationException extends Exception {
      *
      * @param cause
      */
-    public BadValidationException(Throwable cause) { 
+    public OptionPaneValueOutOfBoundsException(Throwable cause) { 
         super(cause); 
     }
     
