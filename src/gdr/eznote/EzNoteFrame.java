@@ -1,5 +1,6 @@
 package gdr.eznote;
 
+import gdr.eznote.configuration.EzNoteConfigurator;
 import gdr.eznote.document.EzNoteChangeValidator;
 import gdr.eznote.document.EzNoteDocument;
 import gdr.eznote.exceptions.BadValidationException;
@@ -27,22 +28,25 @@ public class EzNoteFrame extends javax.swing.JFrame {
     
     private EzNoteFrameAbout winAbout;
     private EzNoteFrameAppearance winAppr;
+    
+    private EzNoteConfigurator conf;
 
     /**
      * Constructor and manual components init
      */
-    public EzNoteFrame() {
+    public EzNoteFrame(EzNoteConfigurator conf) {
         initComponents();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "text");
         this.fc = new EzNoteFileChooser(this, "test");
         this.fc.setFileFilter(filter);
-        this.winAbout = new EzNoteFrameAbout();
+        this.winAbout = new EzNoteFrameAbout(this);
         this.winAbout.dispose();
         this.winAppr = new EzNoteFrameAppearance(this);
         this.winAppr.dispose();
         this.util = new EzNoteFrameUtil(this);
         this.doc = new EzNoteDocument(this);
         this.wlis = new EzNoteWindowAdapter(this);
+        this.conf = conf;
         
         this.addWindowListener(wlis);
     }
@@ -62,6 +66,10 @@ public class EzNoteFrame extends javax.swing.JFrame {
      */
     public EzNoteFrameUtil getUtilities() {
         return this.util;
+    }
+    
+    public EzNoteConfigurator getConfigurator() {
+        return this.conf;
     }
 
     /**
@@ -454,6 +462,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_toolOpenActionPerformed
 
     private void buttonEzNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEzNoteActionPerformed
+        this.winAbout.setLocationRelativeTo(this);
         this.winAbout.setVisible(true);
     }//GEN-LAST:event_buttonEzNoteActionPerformed
 

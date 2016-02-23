@@ -1,5 +1,7 @@
 package gdr.eznote;
 
+import gdr.eznote.configuration.EzNoteConfigurator;
+import gdr.eznote.exceptions.ConfiguratorException;
 import gdr.eznote.themes.EzNoteThemeLibrary;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
@@ -13,13 +15,14 @@ public class EzNoteLauncher {
     
     /**
      * Program launcher class
-     * @param args
-     * @throws ClassNotFoundException
+     * @param args JVM arguments
+     * @throws ClassNotFoundException 
      * @throws InstantiationException
      * @throws IllegalAccessException
      * @throws UnsupportedLookAndFeelException
      */
-    public static void main(String[]args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
+    public static void main(String[]args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, ConfiguratorException{
+        //setting the look and feel for this app
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
@@ -27,13 +30,25 @@ public class EzNoteLauncher {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             //e.printStackTrace();
         }
-        EzNoteFrame main = new EzNoteFrame();
+        
+        EzNoteConfigurator conf = new EzNoteConfigurator();
+        conf.load();
+        
+        //Initialize the main frame
+        EzNoteFrame main = new EzNoteFrame(conf);
         main.setTitle("EzNote - Lightweight txt editor");
         main.setLocationRelativeTo(null);
+        
+        //setting icon
         main.setIconImage(Toolkit.getDefaultToolkit().getImage(main.getClass().getResource("/gdr/icons/icon.png")));
+        
+        //initializing startup
         main.initializeStartup();
         
+        //applying window theme
         main.themeApply(EzNoteThemeLibrary.getDefaultTheme());
+        
+        //setting the window as visible
         main.setVisible(true);
     }
 
