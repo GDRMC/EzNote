@@ -1,5 +1,6 @@
 package gdr.eznote.frames;
 
+import gdr.eznote.EzNoteFrame;
 import gdr.eznote.util.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -13,13 +14,14 @@ import java.util.Scanner;
 public class EzNoteFrameAbout extends javax.swing.JFrame {
 
     String changelog;
+    EzNoteFrame parent;
     
     /**
      *
      */
-    public EzNoteFrameAbout() {
+    public EzNoteFrameAbout(EzNoteFrame parent) {
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.parent = parent;
     }
     
     /**
