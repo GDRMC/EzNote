@@ -1,6 +1,6 @@
 package gdr.eznote.listeners;
 
-import gdr.eznote.EzNoteFrame;
+import gdr.eznote.frames.EzNoteFrame;
 import gdr.eznote.exceptions.OptionPaneValueOutOfBoundsException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

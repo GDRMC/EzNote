@@ -25,6 +25,8 @@ public enum EzNoteTexts {
      * Custom String #1
      */
     TITLE_TEXT1("Lightweight txt editor"),
+    
+    CONFIGURATOR_COMMENT("EZNOTE CONFIGURATION FILE -- DO NOT MODIFY"),
     ;
     
     private final String text;

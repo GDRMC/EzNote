@@ -1,6 +1,6 @@
 package gdr.eznote.document;
 
-import gdr.eznote.EzNoteFrame;
+import gdr.eznote.frames.EzNoteFrame;
 import gdr.eznote.frames.*;
 import gdr.eznote.util.*;
 import java.io.File;

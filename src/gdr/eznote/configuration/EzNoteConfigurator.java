@@ -1,6 +1,7 @@
 package gdr.eznote.configuration;
 
 import gdr.eznote.exceptions.ConfiguratorException;
+import gdr.eznote.util.EzNoteTexts;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,9 +15,12 @@ import java.util.Properties;
  * @author GDR
  */
 public class EzNoteConfigurator {
-    
-    private final boolean DEBUG_DELETE_CONFIGURATION_ON_STARTUP = false;
-    Properties ezP;
+
+    private Properties ezP;
+    private File f = new File("eznote.ezcfg");
+
+    private boolean erase;
+    private boolean saveload;
 
     private Integer cusApprMode;
     private Integer thSelected;
@@ -33,28 +37,36 @@ public class EzNoteConfigurator {
     public EzNoteConfigurator() {
 
     }
-    
-    public boolean exists(){
-        return new File("eznote.ezcfg").exists();
+
+    public EzNoteConfigurator(int erase, int io) {
+        if (erase == (1)) {
+            this.erase = true;
+        }
+        if (io == (1)) {
+            this.saveload = true;
+        }
+    }
+
+    public boolean exists() {
+        return this.f.exists();
     }
 
     public void load() throws ConfiguratorException {
-        File f = new File("eznote.ezcfg");
-        if(DEBUG_DELETE_CONFIGURATION_ON_STARTUP && f.exists()){
+        if (erase && f.exists()) {
             boolean delete = f.delete();
-            if(delete){
+            if (delete) {
                 System.out.println("DEBUG: CONFIGURATION FILE DELETED ON STARTUP");
             }
         }
         Properties ezP = new Properties();
         InputStream stream = null;
         boolean loaded = false;
-        
+
         //if the cfg file does not exists, creating new cfg file
-        if(!exists()){
+        if (!exists()) {
             System.out.println("CONFIGURATOR: NO CFG FILE FOUND\nCONFIGURATOR: CREATING A NEW CFG FILE");
             boolean created = create();
-            if(created){
+            if (created) {
                 System.out.println("CONFIGURATOR: DONE CREATING CFG FILE");
             } else {
                 System.out.println("CONFIGURATOR: ERROR WHILE CREATING CFG FILE");
@@ -63,7 +75,6 @@ public class EzNoteConfigurator {
         System.out.println("CONFIGURATOR: LOADING PROPERTIES");
         //try to read file written
         try {
-            f = new File("eznote.ezcfg");
             stream = new FileInputStream(f);
             loaded = true;
         } catch (Exception e) {
@@ -79,21 +90,42 @@ public class EzNoteConfigurator {
             thToolbar = new Integer(ezP.getProperty("THTOOLBAR"));
             thEditor = new Integer(ezP.getProperty("THEDITOR"));
             thFont = new Integer(ezP.getProperty("THFONT"));
+            this.debugProperties("load");
             loaded2 = true;
         } catch (IOException ex) {
             System.out.println("CONFIGURATOR: Cannot access eznote.ezcfg");
             throw new ConfiguratorException("Main cfg file is missing or is not accessible");
         }
-        
-        if(loaded && loaded2){
+
+        if (loaded && loaded2) {
             System.out.println("CONFIGURATOR: CONFIGURATION LOADED");
         } else {
-            System.out.println("CONFIGURATOR: ERROR WHILELOADING CONF FILE");
+            System.out.println("CONFIGURATOR: ERROR WHILE LOADING CONFIGURATION FILE");
         }
     }
 
-    public void save() {
-
+    public boolean save() throws ConfiguratorException {
+        //array order {custom1,custom2,custom3,themeselected}
+        boolean ok = false;
+        OutputStream stream = null;
+        try {
+            Properties toSave = new Properties();
+            stream = new FileOutputStream(f);
+            toSave.setProperty("CUSAPPRMODE", "" + cusApprMode);
+            toSave.setProperty("THSELECTED", "" + thSelected);
+            toSave.setProperty("THTOOLBAR", "" + thToolbar);
+            toSave.setProperty("THEDITOR", "" + thEditor);
+            toSave.setProperty("THFONT", "" + thFont);
+            this.debugProperties("save");
+            ok = true;
+            toSave.store(stream, "" + EzNoteTexts.CONFIGURATOR_COMMENT);
+            stream.close();
+        } catch (IOException ex) {
+            stream = null;
+            System.out.println("CONFIGURATOR: Cannot access eznote.ezcfg");
+            throw new ConfiguratorException("Main cfg file is missing or is not accessible");
+        }
+        return ok;
     }
 
     public boolean create() throws ConfiguratorException {
@@ -107,14 +139,13 @@ public class EzNoteConfigurator {
         //tries save file
         try {
             Properties props = new Properties();
-            props.setProperty("CUSAPPRMODE", ""+cusApprMode);
-            props.setProperty("THSELECTED", ""+thSelected);
-            props.setProperty("THTOOLBAR", ""+thToolbar);
-            props.setProperty("THEDITOR", ""+thEditor);
-            props.setProperty("THFONT", ""+thFont);
-            File f = new File("eznote.ezcfg");
+            props.setProperty("CUSAPPRMODE", "" + cusApprMode);
+            props.setProperty("THSELECTED", "" + thSelected);
+            props.setProperty("THTOOLBAR", "" + thToolbar);
+            props.setProperty("THEDITOR", "" + thEditor);
+            props.setProperty("THFONT", "" + thFont);
             OutputStream out = new FileOutputStream(f);
-            props.store(out, "EZNOTE CONFIGURATION FILE -- DO NOT MODIFY");
+            props.store(out, "" + EzNoteTexts.CONFIGURATOR_COMMENT);
             ok = true;
         } catch (Exception e) {
             throw new ConfiguratorException("Cannot create configuration file");
@@ -122,23 +153,51 @@ public class EzNoteConfigurator {
         return ok;
     }
 
-    public int getConfigurationThemeToolbarColor(){
+    public int getConfigurationThemeToolbarColor() {
         return this.thToolbar;
     }
-    
-    public int getConfigurationThemeEditorColor(){
+
+    public int getConfigurationThemeEditorColor() {
         return this.thEditor;
     }
-    
-    public int getConfigurationThemeFontColor(){
+
+    public int getConfigurationThemeFontColor() {
         return this.thFont;
     }
-    
-    public int getConfigurationThemeMode(){
+
+    public int getConfigurationThemeMode() {
         return this.cusApprMode;
     }
-    
-    public int getConfigurationThemeChoose(){
+
+    public int getConfigurationThemeChoose() {
         return this.thSelected;
     }
+
+    public void setConfigurationThemeMode(Integer cusApprMode) {
+        this.cusApprMode = cusApprMode;
+    }
+
+    public void setConfigurationThemeChoose(Integer thSelected) {
+        this.thSelected = thSelected;
+    }
+
+    public void setConfigurationThemeToolbarColor(Integer thToolbar) {
+        this.thToolbar = thToolbar;
+    }
+
+    public void setConfigurationThemeEditorColor(Integer thEditor) {
+        this.thEditor = thEditor;
+    }
+
+    public void setConfigurationThemeFontColor(Integer thFont) {
+        this.thFont = thFont;
+    }
+
+    private void debugProperties(String str) {
+        if (this.saveload) {
+            System.out.println("CONFIGURATOR: " + str.toUpperCase() + " " + cusApprMode + " " + thSelected + " " + thToolbar + " " + thEditor + " " + thFont);
+
+        }
+    }
+
 }

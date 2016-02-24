@@ -1,6 +1,5 @@
 package gdr.eznote.frames;
 
-import gdr.eznote.EzNoteFrame;
 import gdr.eznote.util.*;
 import java.io.IOException;
 import java.net.MalformedURLException;

@@ -1,10 +1,12 @@
 package gdr.eznote;
 
+import gdr.eznote.frames.EzNoteFrame;
 import gdr.eznote.configuration.EzNoteConfigurator;
 import gdr.eznote.exceptions.ConfiguratorException;
 import gdr.eznote.themes.EzNoteColorCollection;
 import gdr.eznote.themes.EzNoteTheme;
 import gdr.eznote.themes.EzNoteThemeLibrary;
+import gdr.eznote.util.EzNoteTexts;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -24,6 +26,24 @@ public class EzNoteLauncher {
      * @throws UnsupportedLookAndFeelException
      */
     public static void main(String[]args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, ConfiguratorException{
+        //setting debug mode
+        boolean debugMode = false;
+        boolean ioMode = false;
+        if(args.length==0){
+            System.out.println("NOTICE: TO ACTIVATE DEBUG MODE, PROMPT 'java -jar <jarfile>.jar <parameter>");
+        }
+        if(args.length==1 && "debug".equals(args[0])){
+            debugMode = true;
+            System.out.println("LAUNCHER: ERASE DEBUG MODE ACTIVATED");
+        } else {
+            System.out.println("LAUNCHER: DEBUG MODE DEACTIVATED");
+        }
+        if(args.length==1 && "io".equals(args[0])){
+            ioMode = true;
+            System.out.println("LAUNCHER: IO DEBUG MODE ACTIVATED");
+        } else {
+            System.out.println("LAUNCHER: DEBUG MODE DEACTIVATED");
+        }
         //setting the look and feel for this app
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -34,7 +54,14 @@ public class EzNoteLauncher {
         }
         
         //configuration loader
-        EzNoteConfigurator conf = new EzNoteConfigurator();
+        EzNoteConfigurator conf;
+        if(debugMode){
+            conf = new EzNoteConfigurator(1, 0);
+        } else if(ioMode) {
+            conf = new EzNoteConfigurator(0, 1);
+        } else {
+            conf = new EzNoteConfigurator(0, 0);
+        }
         conf.load();
         EzNoteFrame main = new EzNoteFrame(conf);
         
@@ -61,10 +88,8 @@ public class EzNoteLauncher {
         main.setIconImage(Toolkit.getDefaultToolkit().getImage(main.getClass().getResource("/gdr/icons/icon.png")));
         
         //initializing startup
+        System.out.println("LAUNCHER: STARTING EZNOTE "+EzNoteTexts.SOFTWARE_VERSION);
         main.initializeStartup();
-        
-        //applying window theme
-        //main.themeApply(EzNoteThemeLibrary.getDefaultTheme());
         
         //setting the window as visible
         main.setVisible(true);
