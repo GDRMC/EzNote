@@ -6,6 +6,7 @@ import javax.swing.ListCellRenderer;
 import gdr.eznote.components.EzNoteComboBoxColorChRenderer;
 import gdr.eznote.components.EzNoteComboBoxThemeChRenderer;
 import gdr.eznote.components.EzNoteComboBoxThemePicker;
+import gdr.eznote.themes.EzNoteColor;
 import gdr.eznote.themes.EzNoteTheme;
 
 /**
@@ -281,6 +282,8 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
         System.out.println(this.jComboBox1.getSelectedItem().toString());
         if(this.changelocked){
             this.parent.themeApply((EzNoteTheme)this.jComboBox4.getSelectedItem());
+        } else {
+            this.parent.themeApply(new EzNoteTheme("",(EzNoteColor)this.jComboBox1.getSelectedItem(),(EzNoteColor)this.jComboBox2.getSelectedItem(),(EzNoteColor)this.jComboBox3.getSelectedItem()));
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
