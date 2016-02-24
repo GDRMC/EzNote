@@ -7,9 +7,8 @@ import gdr.eznote.components.EzNoteComboBoxThemeChRenderer;
 import gdr.eznote.components.EzNoteComboBoxThemePicker;
 import gdr.eznote.exceptions.ConfiguratorException;
 import gdr.eznote.themes.EzNoteColor;
+import gdr.eznote.themes.EzNoteColorCollection;
 import gdr.eznote.themes.EzNoteTheme;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -91,7 +90,15 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
         if(this.changelocked){
             this.parent.themeApply((EzNoteTheme)this.jComboBox4.getSelectedItem());
         } else {
-            this.parent.themeApply(new EzNoteTheme("",(EzNoteColor)this.jComboBox1.getSelectedItem(),(EzNoteColor)this.jComboBox2.getSelectedItem(),(EzNoteColor)this.jComboBox3.getSelectedItem()));
+            this.parent.themeApply(
+                    new EzNoteTheme(
+                            "",
+                            (EzNoteColor)this.jComboBox1.getSelectedItem(),
+                            (EzNoteColor)this.jComboBox2.getSelectedItem(),
+                            (EzNoteColor)this.jComboBox3.getSelectedItem(),
+                            EzNoteColorCollection.COLORS_CARET[0]
+                    )
+            );
         }
         this.setConfiguration();
         this.parent.getConfigurator().save();
@@ -153,6 +160,11 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
         jComboBox1.setName(this.jComboBox1.getSelectedItem().toString());
         jComboBox1.setNextFocusableComponent(jComboBox2);
         jComboBox1.setRenderer(this.property1);
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Toolbar color:");
 
@@ -359,6 +371,10 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_buttonDiscardActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonApply;
