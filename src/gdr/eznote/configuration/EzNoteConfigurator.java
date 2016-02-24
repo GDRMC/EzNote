@@ -15,7 +15,7 @@ import java.util.Properties;
  */
 public class EzNoteConfigurator {
     
-    private final boolean DEBUG_DELETE_CONFIGURATION_ON_STARTUP = true;
+    private final boolean DEBUG_DELETE_CONFIGURATION_ON_STARTUP = false;
     Properties ezP;
 
     private Integer cusApprMode;
@@ -122,4 +122,23 @@ public class EzNoteConfigurator {
         return ok;
     }
 
+    public int getConfigurationThemeToolbarColor(){
+        return this.thToolbar;
+    }
+    
+    public int getConfigurationThemeEditorColor(){
+        return this.thEditor;
+    }
+    
+    public int getConfigurationThemeFontColor(){
+        return this.thFont;
+    }
+    
+    public int getConfigurationThemeMode(){
+        return this.cusApprMode;
+    }
+    
+    public int getConfigurationThemeChoose(){
+        return this.thSelected;
+    }
 }
