@@ -16,6 +16,7 @@ public class EzNoteColorCollection {
         new EzNoteColor(Color.LIGHT_GRAY,"Light Gray",Color.BLACK),
         new EzNoteColor(Color.PINK,"Pink",Color.BLACK),
         new EzNoteColor(Color.YELLOW,"Yellow",Color.BLACK),
+        new EzNoteColor(Color.BLACK,"Black",Color.WHITE),
     };
     
     public static final EzNoteColor[]COLORS_TEXT = {
@@ -31,6 +32,7 @@ public class EzNoteColorCollection {
         new EzNoteColor(Color.PINK,"Pink",Color.BLACK),
         new EzNoteColor(Color.RED,"Red",Color.WHITE),
         new EzNoteColor(Color.YELLOW,"Yellow",Color.BLACK),
+        new EzNoteColor(Color.BLACK,"Black",Color.WHITE),
     };
     
     public static EzNoteColor[] getUIColors(){

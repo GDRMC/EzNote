@@ -2,7 +2,7 @@ package gdr.eznote.themes;
 
 public class EzNoteThemeLibrary {
     
-    private static final EzNoteTheme[]THEMES = {
+    public static final EzNoteTheme[]THEMES = {
         new EzNoteTheme(
                 "EzNote Default",
                 EzNoteColorCollection.COLORS_UI[3],
@@ -14,7 +14,20 @@ public class EzNoteThemeLibrary {
                 EzNoteColorCollection.COLORS_UI[1],
                 EzNoteColorCollection.COLORS_UI[4],
                 EzNoteColorCollection.COLORS_TEXT[3]
-        )
+        ),
+        new EzNoteTheme(
+                "Cool Metal",
+                EzNoteColorCollection.COLORS_UI[2],
+                EzNoteColorCollection.COLORS_UI[2],
+                EzNoteColorCollection.COLORS_TEXT[6]
+        ),
+        //7 0 12
+        new EzNoteTheme(
+                "High Contrast",
+                EzNoteColorCollection.COLORS_UI[7],
+                EzNoteColorCollection.COLORS_UI[0],
+                EzNoteColorCollection.COLORS_TEXT[12]
+        ),
     };
     
     public static EzNoteTheme[] getAvailableThemes(){
