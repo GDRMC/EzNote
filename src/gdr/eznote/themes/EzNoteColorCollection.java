@@ -9,30 +9,31 @@ import java.awt.Color;
 public class EzNoteColorCollection {
     
     public static final EzNoteColor[]COLORS_UI = {
-        new EzNoteColor(Color.WHITE,"White",Color.BLACK),
-        new EzNoteColor(Color.CYAN,"Cyan",Color.BLACK),
-        new EzNoteColor(Color.DARK_GRAY,"Dark Gray",Color.WHITE),
-        new EzNoteColor(Color.GRAY,"Gray",Color.WHITE),
-        new EzNoteColor(Color.LIGHT_GRAY,"Light Gray",Color.BLACK),
-        new EzNoteColor(Color.PINK,"Pink",Color.BLACK),
-        new EzNoteColor(Color.YELLOW,"Yellow",Color.BLACK),
-        new EzNoteColor(Color.BLACK,"Black",Color.WHITE),
+        new EzNoteColor(Color.WHITE,"White",Color.BLACK),                       //0
+        new EzNoteColor(Color.CYAN,"Cyan",Color.BLACK),                         //1
+        new EzNoteColor(Color.DARK_GRAY,"Dark Gray",Color.WHITE),               //2
+        new EzNoteColor(Color.GRAY,"Gray",Color.WHITE),                         //3
+        new EzNoteColor(Color.LIGHT_GRAY,"Light Gray",Color.BLACK),             //4
+        new EzNoteColor(Color.PINK,"Pink",Color.BLACK),                         //5
+        new EzNoteColor(Color.YELLOW,"Yellow",Color.BLACK),                     //6
+        new EzNoteColor(Color.BLACK,"Black",Color.WHITE),                       //7
+        new EzNoteColor(Color.ORANGE,"Orange",Color.BLACK),                     //8
     };
     
     public static final EzNoteColor[]COLORS_TEXT = {
-        new EzNoteColor(Color.WHITE,"White",Color.BLACK),
-        new EzNoteColor(Color.BLUE,"Blue",Color.WHITE),
-        new EzNoteColor(Color.CYAN,"Cyan",Color.BLACK),
-        new EzNoteColor(Color.DARK_GRAY,"Dark Gray",Color.WHITE),
-        new EzNoteColor(Color.GRAY,"Gray",Color.WHITE),
-        new EzNoteColor(Color.GREEN,"Green",Color.BLACK),
-        new EzNoteColor(Color.LIGHT_GRAY,"Light Gray",Color.BLACK),
-        new EzNoteColor(Color.MAGENTA,"Magenta",Color.BLACK),
-        new EzNoteColor(Color.ORANGE,"Orange",Color.BLACK),
-        new EzNoteColor(Color.PINK,"Pink",Color.BLACK),
-        new EzNoteColor(Color.RED,"Red",Color.WHITE),
-        new EzNoteColor(Color.YELLOW,"Yellow",Color.BLACK),
-        new EzNoteColor(Color.BLACK,"Black",Color.WHITE),
+        new EzNoteColor(Color.WHITE,"White",Color.BLACK),                       //0
+        new EzNoteColor(Color.BLUE,"Blue",Color.WHITE),                         //1
+        new EzNoteColor(Color.CYAN,"Cyan",Color.BLACK),                         //2
+        new EzNoteColor(Color.DARK_GRAY,"Dark Gray",Color.WHITE),               //3
+        new EzNoteColor(Color.GRAY,"Gray",Color.WHITE),                         //4
+        new EzNoteColor(Color.GREEN,"Green",Color.BLACK),                       //5
+        new EzNoteColor(Color.LIGHT_GRAY,"Light Gray",Color.BLACK),             //6
+        new EzNoteColor(Color.MAGENTA,"Magenta",Color.BLACK),                   //7
+        new EzNoteColor(Color.ORANGE,"Orange",Color.BLACK),                     //8
+        new EzNoteColor(Color.PINK,"Pink",Color.BLACK),                         //9
+        new EzNoteColor(Color.RED,"Red",Color.WHITE),                           //10
+        new EzNoteColor(Color.YELLOW,"Yellow",Color.BLACK),                     //11
+        new EzNoteColor(Color.BLACK,"Black",Color.WHITE),                       //12
     };
     
     public static EzNoteColor[] getUIColors(){
