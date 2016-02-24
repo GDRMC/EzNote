@@ -1,6 +1,7 @@
 # EzNote
 Lightweight notepad project. Version: 0.003d (prerelease) (dev)
 
+[DOWNLOAD LATEST PRE-RELEASE BUILD (may be unstable !)](https://github.com/GDRMC/EzNote/releases/download/v0.003d/EzNote_v0.003d_rev2_developmentbuild.zip)
 ![Screenshot 1](http://puu.sh/niNXR/d3a3bd0d73.png)
 
 This project (french: pronounce "izinote") is made to be a future lightweight and multiplatform notepad with basic functionnalities. It's designed to open plain text files, but is only able to save .txt files for the moment.
