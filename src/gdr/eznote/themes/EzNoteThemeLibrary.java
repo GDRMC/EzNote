@@ -27,6 +27,18 @@ public class EzNoteThemeLibrary {
                 EzNoteColorCollection.COLORS_UI[0],
                 EzNoteColorCollection.COLORS_TEXT[12]
         ),
+        new EzNoteTheme(
+                "Matrix -submitted by ZetaFoX",
+                EzNoteColorCollection.COLORS_UI[3],
+                EzNoteColorCollection.COLORS_UI[7],
+                EzNoteColorCollection.COLORS_TEXT[5]
+        ),
+        new EzNoteTheme(
+                "Aperture Sciences (Orange)",
+                EzNoteColorCollection.COLORS_UI[8],
+                EzNoteColorCollection.COLORS_UI[7],
+                EzNoteColorCollection.COLORS_TEXT[8]
+        ),
     };
     
     public static EzNoteTheme[] getAvailableThemes(){
