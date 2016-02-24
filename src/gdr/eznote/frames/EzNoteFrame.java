@@ -467,6 +467,10 @@ public class EzNoteFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonEzNoteActionPerformed
 
     private void buttonAppearanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAppearanceActionPerformed
+        this.winAppr.resetLockState();
+        if(this.getConfigurator().getConfigurationThemeMode()==1){
+            this.winAppr.changeThemeLockState();
+        }
         this.winAppr.setLocationRelativeTo(this);
         this.winAppr.setVisible(true);
     }//GEN-LAST:event_buttonAppearanceActionPerformed
