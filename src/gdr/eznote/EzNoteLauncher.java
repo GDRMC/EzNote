@@ -2,6 +2,8 @@ package gdr.eznote;
 
 import gdr.eznote.configuration.EzNoteConfigurator;
 import gdr.eznote.exceptions.ConfiguratorException;
+import gdr.eznote.themes.EzNoteColorCollection;
+import gdr.eznote.themes.EzNoteTheme;
 import gdr.eznote.themes.EzNoteThemeLibrary;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
@@ -31,11 +33,27 @@ public class EzNoteLauncher {
             //e.printStackTrace();
         }
         
+        //configuration loader
         EzNoteConfigurator conf = new EzNoteConfigurator();
         conf.load();
-        
-        //Initialize the main frame
         EzNoteFrame main = new EzNoteFrame(conf);
+        
+        //theme apply with configuration
+        if(conf.getConfigurationThemeMode()==0){
+            main.themeApply(EzNoteThemeLibrary.THEMES[conf.getConfigurationThemeChoose()]);
+            System.out.println("LAUNCHER: Factory theme loaded "+conf.getConfigurationThemeChoose());
+        } else {
+            main.themeApply(
+                    new EzNoteTheme(
+                            "",
+                            EzNoteColorCollection.COLORS_UI[conf.getConfigurationThemeToolbarColor()],
+                            EzNoteColorCollection.COLORS_UI[conf.getConfigurationThemeEditorColor()],
+                            EzNoteColorCollection.COLORS_TEXT[conf.getConfigurationThemeFontColor()]
+                    ));
+            System.out.println("LAUNCHER: Custom theme loaded "+conf.getConfigurationThemeToolbarColor()+" "+conf.getConfigurationThemeEditorColor()+" "+conf.getConfigurationThemeFontColor());
+        }
+        
+        //main frame settings
         main.setTitle("EzNote - Lightweight txt editor");
         main.setLocationRelativeTo(null);
         
@@ -46,7 +64,7 @@ public class EzNoteLauncher {
         main.initializeStartup();
         
         //applying window theme
-        main.themeApply(EzNoteThemeLibrary.getDefaultTheme());
+        //main.themeApply(EzNoteThemeLibrary.getDefaultTheme());
         
         //setting the window as visible
         main.setVisible(true);

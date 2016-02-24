@@ -10,7 +10,6 @@ import gdr.eznote.frames.EzNoteFrameAppearance;
 import gdr.eznote.util.EzNoteFrameUtil;
 import gdr.eznote.listeners.EzNoteWindowAdapter;
 import gdr.eznote.themes.EzNoteTheme;
-import java.awt.Color;
 import java.io.FileNotFoundException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JTextArea;
@@ -118,6 +117,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.editor.setBackground(theme.getEditorColor().getColor());
         //font
         this.editor.setForeground(theme.getFontColor().getColor());
+        repaint();
     }
     
     /**
