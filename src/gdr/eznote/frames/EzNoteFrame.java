@@ -1,4 +1,4 @@
-package gdr.eznote;
+package gdr.eznote.frames;
 
 import gdr.eznote.configuration.EzNoteConfigurator;
 import gdr.eznote.document.EzNoteChangeValidator;

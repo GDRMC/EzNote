@@ -21,7 +21,6 @@ public class EzNoteThemeLibrary {
                 EzNoteColorCollection.COLORS_UI[2],
                 EzNoteColorCollection.COLORS_TEXT[6]
         ),
-        //7 0 12
         new EzNoteTheme(
                 "High Contrast",
                 EzNoteColorCollection.COLORS_UI[7],

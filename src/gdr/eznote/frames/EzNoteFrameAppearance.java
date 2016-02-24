@@ -1,6 +1,5 @@
 package gdr.eznote.frames;
 
-import gdr.eznote.EzNoteFrame;
 import gdr.eznote.components.EzNoteComboBoxColorPicker;
 import javax.swing.ListCellRenderer;
 import gdr.eznote.components.EzNoteComboBoxColorChRenderer;

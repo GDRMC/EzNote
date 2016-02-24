@@ -1,10 +1,12 @@
 package gdr.eznote;
 
+import gdr.eznote.frames.EzNoteFrame;
 import gdr.eznote.configuration.EzNoteConfigurator;
 import gdr.eznote.exceptions.ConfiguratorException;
 import gdr.eznote.themes.EzNoteColorCollection;
 import gdr.eznote.themes.EzNoteTheme;
 import gdr.eznote.themes.EzNoteThemeLibrary;
+import gdr.eznote.util.EzNoteTexts;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -61,10 +63,8 @@ public class EzNoteLauncher {
         main.setIconImage(Toolkit.getDefaultToolkit().getImage(main.getClass().getResource("/gdr/icons/icon.png")));
         
         //initializing startup
+        System.out.println("LAUNCHER: STARTING EZNOTE "+EzNoteTexts.SOFTWARE_VERSION);
         main.initializeStartup();
-        
-        //applying window theme
-        //main.themeApply(EzNoteThemeLibrary.getDefaultTheme());
         
         //setting the window as visible
         main.setVisible(true);
