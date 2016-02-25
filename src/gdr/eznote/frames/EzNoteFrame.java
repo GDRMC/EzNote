@@ -4,9 +4,6 @@ import gdr.eznote.configuration.EzNoteConfigurator;
 import gdr.eznote.document.EzNoteChangeValidator;
 import gdr.eznote.document.EzNoteDocument;
 import gdr.eznote.exceptions.BadValidationException;
-import gdr.eznote.frames.EzNoteFileChooser;
-import gdr.eznote.frames.EzNoteFrameAbout;
-import gdr.eznote.frames.EzNoteFrameAppearance;
 import gdr.eznote.util.EzNoteFrameUtil;
 import gdr.eznote.listeners.EzNoteWindowAdapter;
 import gdr.eznote.themes.EzNoteTheme;
@@ -117,6 +114,8 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.editor.setBackground(theme.getEditorColor().getColor());
         //font
         this.editor.setForeground(theme.getFontColor().getColor());
+        //caret color
+        this.editor.setCaretColor(theme.getCaretColor().getColor());
         repaint();
     }
     

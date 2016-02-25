@@ -36,13 +36,13 @@ public class EzNoteLauncher {
             debugMode = true;
             System.out.println("LAUNCHER: ERASE DEBUG MODE ACTIVATED");
         } else {
-            System.out.println("LAUNCHER: DEBUG MODE DEACTIVATED");
+            System.out.println("LAUNCHER: ERASE DEBUG MODE DEACTIVATED");
         }
         if(args.length==1 && "io".equals(args[0])){
             ioMode = true;
             System.out.println("LAUNCHER: IO DEBUG MODE ACTIVATED");
         } else {
-            System.out.println("LAUNCHER: DEBUG MODE DEACTIVATED");
+            System.out.println("LAUNCHER: IO DEBUG MODE DEACTIVATED");
         }
         //setting the look and feel for this app
         try {
@@ -75,7 +75,8 @@ public class EzNoteLauncher {
                             "",
                             EzNoteColorCollection.COLORS_UI[conf.getConfigurationThemeToolbarColor()],
                             EzNoteColorCollection.COLORS_UI[conf.getConfigurationThemeEditorColor()],
-                            EzNoteColorCollection.COLORS_TEXT[conf.getConfigurationThemeFontColor()]
+                            EzNoteColorCollection.COLORS_TEXT[conf.getConfigurationThemeFontColor()],
+                            EzNoteColorCollection.COLORS_CARET[0]
                     ));
             System.out.println("LAUNCHER: Custom theme loaded "+conf.getConfigurationThemeToolbarColor()+" "+conf.getConfigurationThemeEditorColor()+" "+conf.getConfigurationThemeFontColor());
         }

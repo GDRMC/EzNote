@@ -6,12 +6,16 @@ public class EzNoteTheme {
     private final EzNoteColor toolbarColor;
     private final EzNoteColor editorColor;
     private final EzNoteColor fontColor;
+    private final EzNoteColor caretColor;
     
-    public EzNoteTheme(String name, EzNoteColor toolbarColor, EzNoteColor editorColor, EzNoteColor fontColor){
+    public EzNoteTheme(String name, EzNoteColor toolbarColor, 
+            EzNoteColor editorColor, EzNoteColor fontColor, 
+            EzNoteColor caretColor){
         this.name = name;
         this.toolbarColor = toolbarColor;
         this.editorColor = editorColor;
         this.fontColor = fontColor;
+        this.caretColor = caretColor;
     }
 
     public String getName() {
@@ -30,4 +34,7 @@ public class EzNoteTheme {
         return fontColor;
     }
 
+    public EzNoteColor getCaretColor() {
+        return caretColor;
+    }
 }
