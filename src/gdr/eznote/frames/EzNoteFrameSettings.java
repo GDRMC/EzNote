@@ -9,12 +9,13 @@ import gdr.eznote.exceptions.ConfiguratorException;
 import gdr.eznote.themes.EzNoteColor;
 import gdr.eznote.themes.EzNoteColorCollection;
 import gdr.eznote.themes.EzNoteTheme;
+import gdr.eznote.themes.EzNoteThemeManager;
 
 /**
  *
  * @author GDR
  */
-public class EzNoteFrameAppearance extends javax.swing.JFrame {
+public class EzNoteFrameSettings extends javax.swing.JFrame {
     
     private EzNoteFrame parent;
     private ListCellRenderer property1 = new EzNoteComboBoxColorChRenderer();
@@ -22,13 +23,17 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
     private ListCellRenderer property3 = new EzNoteComboBoxColorChRenderer();
     private ListCellRenderer thproper1 = new EzNoteComboBoxThemeChRenderer();
     
+    private final EzNoteThemeManager themeManager;
+    
     private boolean changelocked;
     
     
     /**
      * Creates new form EzNoteFrameAppearance
      */
-    public EzNoteFrameAppearance(EzNoteFrame parent) {
+    public EzNoteFrameSettings(EzNoteFrame parent) {
+        this.themeManager = EzNoteThemeManager.workstation;
+        this.themeManager.link(this);
         this.parent = parent;
         initComponents();
         this.setAlwaysOnTop(true);
@@ -42,8 +47,8 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
         this.changelocked = true;
     }
     
-    public void changeThemeLockState(){
-        if(this.jComboBox1.isEnabled()||this.jComboBox2.isEnabled()||this.jComboBox3.isEnabled()){
+    public void changeThemeLockState(int i){
+        if(i==0){
             //deactivate manual chooser group
             this.jComboBox1.setEnabled(false);
             this.jComboBox2.setEnabled(false);
@@ -66,6 +71,14 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
             this.jComboBox2.setSelectedIndex(0);
             this.jComboBox3.setSelectedIndex(3);
         }
+    }
+    
+    public EzNoteFrame getMainFrame(){
+        return this.parent;
+    }
+    
+    public EzNoteThemeManager getThemeManager(){
+        return this.themeManager;
     }
     
     public boolean getThemeLockState(){
@@ -125,7 +138,7 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        radioGroup = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -138,13 +151,16 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
         jRadioButton2 = new javax.swing.JRadioButton();
         jComboBox4 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBox5 = new javax.swing.JComboBox<>();
+        jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         buttonConfirm = new javax.swing.JButton();
         buttonApply = new javax.swing.JButton();
         buttonDiscard = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Appearances - EzNote");
+        setTitle("Settings - EzNote");
         setFocusCycleRoot(false);
         setLocationByPlatform(true);
         setResizable(false);
@@ -180,9 +196,9 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
         jComboBox3.setRenderer(this.property3);
 
         jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(jRadioButton1);
+        radioGroup.add(jRadioButton1);
         jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Use predefined EzNote themes");
+        jRadioButton1.setText("Use predefined EzNote theme");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton1ActionPerformed(evt);
@@ -190,7 +206,7 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
         });
 
         jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(jRadioButton2);
+        radioGroup.add(jRadioButton2);
         jRadioButton2.setText("Use your custom colors");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -248,23 +264,51 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jComboBox3)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6))
+                .addGap(44, 44, 44))
         );
 
-        jTabbedPane1.addTab("Colors", jPanel2);
+        jTabbedPane1.addTab("Appearance", jPanel2);
+
+        jLabel4.setText("Caret color:");
+
+        jComboBox5.setModel(new EzNoteComboBoxColorPicker(3));
+        jComboBox5.setRenderer(new EzNoteComboBoxColorChRenderer());
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 461, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox5, 0, 377, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 247, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBox5)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Fonts", jPanel3);
+        jTabbedPane1.addTab("Editor Colors", jPanel3);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 461, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 246, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Settings", jPanel4);
 
         buttonConfirm.setBackground(new java.awt.Color(204, 255, 204));
         buttonConfirm.setText("Confirm");
@@ -350,14 +394,6 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonApplyActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        this.changeThemeLockState();
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        this.changeThemeLockState();
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
-
     private void buttonDiscardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDiscardActionPerformed
         this.dispose();
         this.jComboBox1.setSelectedIndex(this.parent.getConfigurator().getConfigurationThemeToolbarColor());
@@ -372,6 +408,14 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
         
     }//GEN-LAST:event_buttonDiscardActionPerformed
 
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        this.changeThemeLockState(1);
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        this.changeThemeLockState(0);
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -380,19 +424,22 @@ public class EzNoteFrameAppearance extends javax.swing.JFrame {
     private javax.swing.JButton buttonApply;
     private javax.swing.JButton buttonConfirm;
     private javax.swing.JButton buttonDiscard;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.ButtonGroup radioGroup;
     // End of variables declaration//GEN-END:variables
 }

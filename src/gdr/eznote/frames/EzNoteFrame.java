@@ -23,7 +23,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private EzNoteWindowAdapter wlis;
     
     private EzNoteFrameAbout winAbout;
-    private EzNoteFrameAppearance winAppr;
+    private EzNoteFrameSettings winAppr;
     
     private EzNoteConfigurator conf;
 
@@ -37,7 +37,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.fc.setFileFilter(filter);
         this.winAbout = new EzNoteFrameAbout(this);
         this.winAbout.dispose();
-        this.winAppr = new EzNoteFrameAppearance(this);
+        this.winAppr = new EzNoteFrameSettings(this);
         this.winAppr.dispose();
         this.util = new EzNoteFrameUtil(this);
         this.doc = new EzNoteDocument(this);
@@ -468,7 +468,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private void buttonAppearanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAppearanceActionPerformed
         this.winAppr.resetLockState();
         if(this.getConfigurator().getConfigurationThemeMode()==1){
-            this.winAppr.changeThemeLockState();
+            this.winAppr.changeThemeLockState(1);
         }
         this.winAppr.setLocationRelativeTo(this);
         this.winAppr.setVisible(true);
@@ -551,5 +551,15 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private javax.swing.JToolBar toolbarMain;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
+    public void paintThemeToFrame(EzNoteTheme theme) {
+        this.toolbarMain.setBackground(theme.getToolbarColor().getColor());
+        this.toolNew.setBackground(theme.getToolbarColor().getColor());
+        this.toolQSave.setBackground(theme.getToolbarColor().getColor());
+        this.toolSaveAs.setBackground(theme.getToolbarColor().getColor());
+        this.toolOpen.setBackground(theme.getToolbarColor().getColor());
+        this.toolbarAbout.setBackground(theme.getToolbarColor().getColor());
+        this.buttonEzNote.setBackground(theme.getToolbarColor().getColor());
+    }
 
 }
