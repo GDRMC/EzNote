@@ -1,6 +1,7 @@
 === Next v. ===
 - Configuration file
 - Bugfixes
+- Caret color
 ===============
 
 === v0.003d ===
