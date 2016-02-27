@@ -1,4 +1,4 @@
-=== Next v. ===
+=== >0.004d ===
 - Configuration file
 - Bugfixes
 - Caret color
