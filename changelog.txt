@@ -2,6 +2,7 @@
 - Configuration file
 - Bugfixes
 - Caret color
+- Theme files
 ===============
 
 === v0.003d ===
