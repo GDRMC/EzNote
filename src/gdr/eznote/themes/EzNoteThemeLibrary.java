@@ -1,5 +1,6 @@
 package gdr.eznote.themes;
 
+@Deprecated
 public class EzNoteThemeLibrary {
     
     public static final EzNoteTheme[]THEMES = {
@@ -32,18 +33,25 @@ public class EzNoteThemeLibrary {
                 EzNoteColorCollection.COLORS_CARET[0]
         ),
         new EzNoteTheme(
-                "Matrix --submitted by ZetaFoX",
+                "Matrix",
                 EzNoteColorCollection.COLORS_UI[3],
                 EzNoteColorCollection.COLORS_UI[7],
                 EzNoteColorCollection.COLORS_TEXT[5],
                 EzNoteColorCollection.COLORS_CARET[7]
         ),
         new EzNoteTheme(
-                "Aperture Sciences (Orange)",
+                "Aperture Sciences",
                 EzNoteColorCollection.COLORS_UI[9],
                 EzNoteColorCollection.COLORS_UI[7],
                 EzNoteColorCollection.COLORS_TEXT[8],
                 EzNoteColorCollection.COLORS_CARET[11]
+        ),
+        new EzNoteTheme(
+                "NY at night",
+                EzNoteColorCollection.COLORS_UI[10],
+                EzNoteColorCollection.COLORS_UI[2],
+                EzNoteColorCollection.COLORS_TEXT[0],
+                EzNoteColorCollection.COLORS_CARET[4]
         ),
     };
     

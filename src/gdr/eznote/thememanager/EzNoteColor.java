@@ -1,29 +1,31 @@
-package gdr.eznote.themes;
+package gdr.eznote.thememanager;
 
 import java.awt.Color;
 
-@Deprecated
 public class EzNoteColor {
     
-    private int r;
-    private int g;
-    private int b;
-    private String displayName;
-    private Color textColor;
+    private final int r;
+    private final int g;
+    private final int b;
+    private final String displayName;
+    private final String searchName;
+    private final Color textColor;
     
-    public EzNoteColor(int r, int g, int b, String name, Color textColor){
+    public EzNoteColor(int r, int g, int b, String name, String search, Color textColor){
         this.r = r;
         this.g = g;
         this.b = b;
         this.displayName = name;
+        this.searchName = search;
         this.textColor = textColor;
     }
     
-    public EzNoteColor(Color c, String name, Color textColor){
+    public EzNoteColor(Color c, String name, String search, Color textColor){
         this.r = c.getRed();
         this.g = c.getGreen();
         this.b = c.getBlue();
         this.displayName = name;
+        this.searchName = search;
         this.textColor = textColor;
     }
 
@@ -43,6 +45,10 @@ public class EzNoteColor {
         return displayName;
     }
     
+    public String getSearchName() {
+        return searchName;
+    }
+    
     public Color getColor() {
         return new Color(this.r, this.g, this.b);
     }
@@ -53,6 +59,8 @@ public class EzNoteColor {
     
     @Override
     public String toString(){
-        return this.getName();
+        return "EzNoteColor "+this.getSearchName()+" ("+this.displayName
+                +") - RGB: "+this.r+"_"+this.g+"_"+this.b+" - FOREGR: "
+                +this.textColor;
     }
 }

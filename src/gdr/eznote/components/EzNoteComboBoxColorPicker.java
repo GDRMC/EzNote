@@ -25,6 +25,9 @@ public class EzNoteComboBoxColorPicker extends AbstractListModel implements Comb
             case 2: //texts
                 this.colors = EzNoteColorCollection.getTextColors();
                 break;
+            case 3: //caret
+                this.colors = EzNoteColorCollection.getCaretColors();
+                break;
             default:
                 this.colors = EzNoteColorCollection.getTextColors();
                 break;

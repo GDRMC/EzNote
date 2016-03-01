@@ -2,14 +2,19 @@ package gdr.eznote.frames;
 
 import gdr.eznote.configuration.EzNoteConfigurator;
 import gdr.eznote.document.EzNoteChangeValidator;
-import gdr.eznote.document.EzNoteDocument;
+import gdr.eznote.document.EzNoteTXT;
 import gdr.eznote.exceptions.BadValidationException;
+import gdr.eznote.exceptions.FileSelectionException;
 import gdr.eznote.util.EzNoteFrameUtil;
 import gdr.eznote.listeners.EzNoteWindowAdapter;
 import gdr.eznote.themes.EzNoteTheme;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
 /**
  * Main Editor frame
@@ -19,14 +24,14 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
     private EzNoteFileChooser fc;
     private EzNoteFrameUtil util;
-    private EzNoteDocument doc;
+    public EzNoteTXT document;
     private EzNoteWindowAdapter wlis;
     
     private EzNoteFrameAbout winAbout;
-    private EzNoteFrameAppearance winAppr;
+    private EzNoteFrameSettings winAppr;
     
     private EzNoteConfigurator conf;
-
+    
     /**
      * Constructor and manual components init
      */
@@ -37,13 +42,13 @@ public class EzNoteFrame extends javax.swing.JFrame {
         this.fc.setFileFilter(filter);
         this.winAbout = new EzNoteFrameAbout(this);
         this.winAbout.dispose();
-        this.winAppr = new EzNoteFrameAppearance(this);
+        this.winAppr = new EzNoteFrameSettings(this);
         this.winAppr.dispose();
         this.util = new EzNoteFrameUtil(this);
-        this.doc = new EzNoteDocument(this);
         this.wlis = new EzNoteWindowAdapter(this);
         this.conf = conf;
-        
+        editorPane.setViewportView(getEditor());
+        this.setDocumentListener(document);
         this.addWindowListener(wlis);
     }
 
@@ -52,7 +57,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
      * @param dc EzNoteDocumentListener
      */
     
-    public void setDocumentListener(EzNoteDocument dc) {
+    public void setDocumentListener(EzNoteTXT dc) {
         this.editor.getDocument().addDocumentListener(dc);
     }
 
@@ -80,8 +85,12 @@ public class EzNoteFrame extends javax.swing.JFrame {
      * Returns the document of the window
      * @return EzNoteDocument
      */
-    public EzNoteDocument getDocument() {
-        return this.doc;
+    public EzNoteTXT getDocument() {
+        return this.document;
+    }
+    
+    public void setDocument(File f){
+        this.document = new EzNoteTXT(this, EzNoteFrameUtil.getProperFileExtension(f));
     }
 
     /**
@@ -89,7 +98,7 @@ public class EzNoteFrame extends javax.swing.JFrame {
      * @return String filename of the current document
      */
     public String getFilename() {
-        return this.doc.getFile().getName();
+        return this.document.file.getName();
     }
 
     /**
@@ -100,22 +109,9 @@ public class EzNoteFrame extends javax.swing.JFrame {
         return this.editor;
     }
 
+    @Deprecated
     public void themeApply(EzNoteTheme theme){
-        //toolbar 1
-        this.toolbarMain.setBackground(theme.getToolbarColor().getColor());
-        this.toolNew.setBackground(theme.getToolbarColor().getColor());
-        this.toolQSave.setBackground(theme.getToolbarColor().getColor());
-        this.toolSaveAs.setBackground(theme.getToolbarColor().getColor());
-        this.toolOpen.setBackground(theme.getToolbarColor().getColor());
-        //toolbar 2
-        this.toolbarAbout.setBackground(theme.getToolbarColor().getColor());
-        this.buttonEzNote.setBackground(theme.getToolbarColor().getColor());
-        //editor
-        this.editor.setBackground(theme.getEditorColor().getColor());
-        //font
-        this.editor.setForeground(theme.getFontColor().getColor());
-        //caret color
-        this.editor.setCaretColor(theme.getCaretColor().getColor());
+        paintThemeToFrame(theme);
         repaint();
     }
     
@@ -129,9 +125,6 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        jFileChooser1 = new javax.swing.JFileChooser();
-        editorPane = new javax.swing.JScrollPane();
-        editor = new javax.swing.JTextArea();
         toolbarMain = new javax.swing.JToolBar();
         toolNew = new javax.swing.JButton();
         sepr1 = new javax.swing.JToolBar.Separator();
@@ -141,6 +134,25 @@ public class EzNoteFrame extends javax.swing.JFrame {
         sepr2 = new javax.swing.JToolBar.Separator();
         toolbarAbout = new javax.swing.JToolBar();
         buttonEzNote = new javax.swing.JButton();
+        editorPane = new javax.swing.JScrollPane();
+        editor = new javax.swing.JTextArea();
+        toolbarBottom = new javax.swing.JToolBar();
+        label1 = new javax.swing.JLabel();
+        dispCaretX = new javax.swing.JLabel();
+        label3 = new javax.swing.JLabel();
+        dispCaretY = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        jLabel2 = new javax.swing.JLabel();
+        dispRows = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JToolBar.Separator();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jSeparator6 = new javax.swing.JToolBar.Separator();
+        jLabel1 = new javax.swing.JLabel();
+        dispLetters = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JToolBar.Separator();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         buttonNew = new javax.swing.JMenuItem();
@@ -152,14 +164,9 @@ public class EzNoteFrame extends javax.swing.JFrame {
         buttonExit = new javax.swing.JMenuItem();
         menuSettings = new javax.swing.JMenu();
         buttonAppearance = new javax.swing.JMenuItem();
-        buttonSettings = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(540, 300));
-
-        editor.setColumns(20);
-        editor.setRows(5);
-        editorPane.setViewportView(editor);
 
         toolbarMain.setBackground(new java.awt.Color(204, 204, 204));
         toolbarMain.setBorder(null);
@@ -265,6 +272,65 @@ public class EzNoteFrame extends javax.swing.JFrame {
         });
         toolbarAbout.add(buttonEzNote);
 
+        editor.setColumns(20);
+        editor.setRows(5);
+        editorPane.setViewportView(editor);
+
+        toolbarBottom.setFloatable(false);
+        toolbarBottom.setRollover(true);
+
+        label1.setForeground(new java.awt.Color(255, 255, 255));
+        label1.setText(" P: ");
+        label1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        toolbarBottom.add(label1);
+
+        dispCaretX.setForeground(new java.awt.Color(255, 255, 255));
+        dispCaretX.setText("*");
+        dispCaretX.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        toolbarBottom.add(dispCaretX);
+
+        label3.setForeground(new java.awt.Color(255, 255, 255));
+        label3.setText(":");
+        label3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        toolbarBottom.add(label3);
+
+        dispCaretY.setForeground(new java.awt.Color(255, 255, 255));
+        dispCaretY.setText("*");
+        dispCaretY.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        toolbarBottom.add(dispCaretY);
+        toolbarBottom.add(jSeparator3);
+
+        jLabel2.setText("R: ");
+        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        toolbarBottom.add(jLabel2);
+
+        dispRows.setText("*");
+        dispRows.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        toolbarBottom.add(dispRows);
+        toolbarBottom.add(jSeparator5);
+
+        jLabel3.setText("Cl: ");
+        toolbarBottom.add(jLabel3);
+
+        jLabel4.setText("*");
+        toolbarBottom.add(jLabel4);
+        toolbarBottom.add(jSeparator6);
+
+        jLabel1.setText("C: ");
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        toolbarBottom.add(jLabel1);
+
+        dispLetters.setText("*");
+        dispLetters.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        toolbarBottom.add(dispLetters);
+        toolbarBottom.add(jSeparator7);
+
+        jLabel5.setText("Ch: ");
+        toolbarBottom.add(jLabel5);
+
+        jLabel6.setText("0");
+        toolbarBottom.add(jLabel6);
+
         menuFile.setMnemonic('f');
         menuFile.setText("File");
 
@@ -326,17 +392,14 @@ public class EzNoteFrame extends javax.swing.JFrame {
         menuSettings.setText("Preferences");
 
         buttonAppearance.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        buttonAppearance.setText("Appearance");
+        buttonAppearance.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gdr/icons/m_settings.png"))); // NOI18N
+        buttonAppearance.setText("Settings");
         buttonAppearance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonAppearanceActionPerformed(evt);
             }
         });
         menuSettings.add(buttonAppearance);
-
-        buttonSettings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        buttonSettings.setText("Settings...");
-        menuSettings.add(buttonSettings);
 
         menuBar.add(menuSettings);
 
@@ -349,8 +412,9 @@ public class EzNoteFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(toolbarAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(toolbarMain, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE))
+                .addComponent(toolbarMain, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE))
             .addComponent(editorPane)
+            .addComponent(toolbarBottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -359,46 +423,54 @@ public class EzNoteFrame extends javax.swing.JFrame {
                     .addComponent(toolbarMain, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(toolbarAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
-                .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
+                .addComponent(editorPane, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(toolbarBottom, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void buttonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_buttonExitActionPerformed
 
     private void buttonSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveAsActionPerformed
         try {
-            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_SAVEAS);
+            EzNoteChangeValidator.validateAction(this.document, EzNoteChangeValidator.FILE_SAVEAS);
         } catch (BadValidationException ex) {
             ex.printStackTrace();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
+        } catch (FileSelectionException ex) {
+            Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonSaveAsActionPerformed
 
     private void buttonOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenActionPerformed
         try {
-            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_OPEN);
+            EzNoteChangeValidator.validateAction(this.document, EzNoteChangeValidator.FILE_OPEN);
         } catch (BadValidationException ex) {
             ex.printStackTrace();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
+        } catch (FileSelectionException ex) {
+            Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonOpenActionPerformed
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
         boolean isValid = false;
         try {
-            isValid = EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_NEW);
+            isValid = EzNoteChangeValidator.validateAction(this.document, EzNoteChangeValidator.FILE_NEW);
         } catch (BadValidationException ex) {
             ex.printStackTrace();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
+        } catch (FileSelectionException ex) {
+            Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (isValid) {
             this.newFile();
@@ -407,23 +479,26 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
     private void buttonQSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonQSaveActionPerformed
         try {
-            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_QSAVE);
+            EzNoteChangeValidator.validateAction(this.document, EzNoteChangeValidator.FILE_QSAVE);
         } catch (BadValidationException ex) {
             ex.printStackTrace();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
+        } catch (FileSelectionException ex) {
+            Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.saveFile();
     }//GEN-LAST:event_buttonQSaveActionPerformed
 
     private void toolNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolNewActionPerformed
         boolean isValid = false;
         try {
-            isValid = EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_NEW);
+            isValid = EzNoteChangeValidator.validateAction(this.document, EzNoteChangeValidator.FILE_NEW);
         } catch (BadValidationException ex) {
             ex.printStackTrace();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
+        } catch (FileSelectionException ex) {
+            Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (isValid) {
             this.newFile();
@@ -432,31 +507,37 @@ public class EzNoteFrame extends javax.swing.JFrame {
 
     private void toolQSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolQSaveActionPerformed
         try {
-            EzNoteChangeValidator.validateAction(doc, EzNoteChangeValidator.FILE_QSAVE);
+            EzNoteChangeValidator.validateAction(this.document, EzNoteChangeValidator.FILE_QSAVE);
         } catch (BadValidationException ex) {
             ex.printStackTrace();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
+        } catch (FileSelectionException ex) {
+            Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_toolQSaveActionPerformed
 
     private void toolSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolSaveAsActionPerformed
         try {
-            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_SAVEAS);
+            EzNoteChangeValidator.validateAction(this.document, EzNoteChangeValidator.FILE_SAVEAS);
         } catch (BadValidationException ex) {
             ex.printStackTrace();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
+        } catch (FileSelectionException ex) {
+            Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_toolSaveAsActionPerformed
 
     private void toolOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolOpenActionPerformed
         try {
-            EzNoteChangeValidator.validateAction(this.doc, EzNoteChangeValidator.FILE_OPEN);
+            EzNoteChangeValidator.validateAction(this.document, EzNoteChangeValidator.FILE_OPEN);
         } catch (BadValidationException ex) {
             ex.printStackTrace();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
+        } catch (FileSelectionException ex) {
+            Logger.getLogger(EzNoteFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_toolOpenActionPerformed
 
@@ -468,12 +549,12 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private void buttonAppearanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAppearanceActionPerformed
         this.winAppr.resetLockState();
         if(this.getConfigurator().getConfigurationThemeMode()==1){
-            this.winAppr.changeThemeLockState();
+            this.winAppr.changeThemeLockState(1);
         }
         this.winAppr.setLocationRelativeTo(this);
         this.winAppr.setVisible(true);
     }//GEN-LAST:event_buttonAppearanceActionPerformed
-
+    
     /**
      * Initialize a new file while the program is starting, and locks the quick
      * save buttons
@@ -507,19 +588,8 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private void newFile() {
         this.editor.setText("");
         this.setTitle(this.util.getWindowTitle(false, "Untitled"));
-        this.doc.resetIndicators();
-    }
-
-    private void openFile() throws FileNotFoundException {
-        this.doc.open();
-    }
-
-    private void saveFile() {
-        this.doc.saveQ();
-    }
-
-    private void saveAsFile() {
-        this.doc.saveAs();
+        this.document = new EzNoteTXT(this, new File("temp/tmp.txt"));
+        this.document.updateWindowTitle();
     }
     //////
 
@@ -532,12 +602,26 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem buttonOpen;
     private javax.swing.JMenuItem buttonQSave;
     private javax.swing.JMenuItem buttonSaveAs;
-    private javax.swing.JMenuItem buttonSettings;
+    public javax.swing.JLabel dispCaretX;
+    public javax.swing.JLabel dispCaretY;
+    private javax.swing.JLabel dispLetters;
+    private javax.swing.JLabel dispRows;
     private javax.swing.JTextArea editor;
     private javax.swing.JScrollPane editorPane;
-    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    public javax.swing.JLabel jLabel6;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar.Separator jSeparator5;
+    private javax.swing.JToolBar.Separator jSeparator6;
+    private javax.swing.JToolBar.Separator jSeparator7;
+    private javax.swing.JLabel label1;
+    private javax.swing.JLabel label3;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuSettings;
@@ -548,8 +632,49 @@ public class EzNoteFrame extends javax.swing.JFrame {
     private javax.swing.JButton toolQSave;
     private javax.swing.JButton toolSaveAs;
     private javax.swing.JToolBar toolbarAbout;
+    private javax.swing.JToolBar toolbarBottom;
     private javax.swing.JToolBar toolbarMain;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
+    public void paintThemeToFrame(EzNoteTheme theme) {
+        if("javax.swing.plaf.metal.MetalLookAndFeel".equals(UIManager.getCrossPlatformLookAndFeelClassName())){
+            this.editor.setBorder(null);
+            this.toolbarMain.setBorder(null);
+            this.toolbarAbout.setBorder(null);
+            this.toolbarBottom.setBorder(null);
+        }
+        System.out.println(UIManager.getCrossPlatformLookAndFeelClassName());
+        //editor color
+        this.editor.setBackground(theme.getEditorColor().getColor());
+        //editor caret and font color
+        this.editor.setCaretColor(theme.getCaretColor().getColor());
+        this.editor.setForeground(theme.getFontColor().getColor());
+        //menu bar colors (DISABLED BECAUSE OF WINDOWS LAF
+        //this.menuBar.setBackground(theme.getToolbarColor().getColor());
+        //this.menuFile.setForeground(theme.getToolbarColor().getTextColor());
+        //this.menuSettings.setForeground(theme.getToolbarColor().getTextColor());
+        //toolbars colors
+        this.toolbarAbout.setBackground(theme.getToolbarColor().getColor());
+        this.toolbarMain.setBackground(theme.getToolbarColor().getColor());
+        this.toolbarBottom.setBackground(theme.getToolbarColor().getColor());
+        //toolbar components color
+        this.buttonEzNote.setBackground(theme.getToolbarColor().getColor());
+        this.toolNew.setBackground(theme.getToolbarColor().getColor());
+        this.toolQSave.setBackground(theme.getToolbarColor().getColor());
+        this.toolSaveAs.setBackground(theme.getToolbarColor().getColor());
+        this.toolOpen.setBackground(theme.getToolbarColor().getColor());
+        //bottom bar components colors
+        this.label1.setForeground(theme.getToolbarColor().getTextColor());
+        this.dispCaretX.setForeground(theme.getToolbarColor().getTextColor());
+        this.label3.setForeground(theme.getToolbarColor().getTextColor());
+        this.dispCaretY.setForeground(theme.getToolbarColor().getTextColor());
+        this.jLabel1.setForeground(theme.getToolbarColor().getTextColor());
+        this.dispLetters.setForeground(theme.getToolbarColor().getTextColor());
+        this.jLabel2.setForeground(theme.getToolbarColor().getTextColor());
+        this.dispRows.setForeground(theme.getToolbarColor().getTextColor());
+        this.jLabel3.setForeground(theme.getToolbarColor().getTextColor());
+        this.jLabel4.setForeground(theme.getToolbarColor().getTextColor());
+    }
 
 }

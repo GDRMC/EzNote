@@ -69,11 +69,11 @@ public class EzNoteFrameAbout extends javax.swing.JFrame {
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel1.setText(""+EzNoteTexts.SOFTWARE_NAME);
+        jLabel1.setText(""+EzNoteStringDB.SOFTWARE_NAME);
 
         jLabel2.setText("Developement build");
 
-        jLabel3.setText("version: "+EzNoteTexts.SOFTWARE_VERSION+" dev");
+        jLabel3.setText("version: "+EzNoteStringDB.SOFTWARE_VERSION+" dev");
 
         jLabel4.setText("Code by GDR");
 
