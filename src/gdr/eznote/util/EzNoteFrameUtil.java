@@ -1,7 +1,6 @@
 package gdr.eznote.util;
 
 import gdr.eznote.frames.EzNoteFrame;
-import gdr.eznote.*;
 import java.io.File;
 
 /**
@@ -33,6 +32,14 @@ public class EzNoteFrameUtil {
         }
     }
     
+    public static File getProperFileExtension(File f){
+        if(f.getAbsolutePath().endsWith("txt")){
+            return f;
+        } else {
+            return new File(f.getAbsolutePath()+".txt");
+        }
+    }
+    
     /**
      *
      * @param f
@@ -55,29 +62,29 @@ public class EzNoteFrameUtil {
             if (fileLoaded) {
                 return "*"
                         + "<"+filename+">"
-                        + EzNoteTexts.TITLE_SEPARATOR
-                        + EzNoteTexts.SOFTWARE_NAME
+                        + EzNoteStringDB.TITLE_SEPARATOR
+                        + EzNoteStringDB.SOFTWARE_NAME
                         + " "
-                        + EzNoteTexts.SOFTWARE_VERSION
-                        + EzNoteTexts.TITLE_SEPARATOR
-                        + EzNoteTexts.TITLE_TEXT1;
+                        + EzNoteStringDB.SOFTWARE_VERSION
+                        + EzNoteStringDB.TITLE_SEPARATOR
+                        + EzNoteStringDB.TITLE_TEXT1;
             } else {
                 return "<"+filename+">"
-                        + EzNoteTexts.TITLE_SEPARATOR
-                        + EzNoteTexts.SOFTWARE_NAME
+                        + EzNoteStringDB.TITLE_SEPARATOR
+                        + EzNoteStringDB.SOFTWARE_NAME
                         + " "
-                        + EzNoteTexts.SOFTWARE_VERSION
-                        + EzNoteTexts.TITLE_SEPARATOR
-                        + EzNoteTexts.TITLE_TEXT1;
+                        + EzNoteStringDB.SOFTWARE_VERSION
+                        + EzNoteStringDB.TITLE_SEPARATOR
+                        + EzNoteStringDB.TITLE_TEXT1;
             }
         } else {
             return "<Untitled>"
-                        + EzNoteTexts.TITLE_SEPARATOR
-                        + EzNoteTexts.SOFTWARE_NAME
+                        + EzNoteStringDB.TITLE_SEPARATOR
+                        + EzNoteStringDB.SOFTWARE_NAME
                         + " "
-                        + EzNoteTexts.SOFTWARE_VERSION
-                        + EzNoteTexts.TITLE_SEPARATOR
-                        + EzNoteTexts.TITLE_TEXT1;
+                        + EzNoteStringDB.SOFTWARE_VERSION
+                        + EzNoteStringDB.TITLE_SEPARATOR
+                        + EzNoteStringDB.TITLE_TEXT1;
         }
         
     }

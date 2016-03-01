@@ -115,7 +115,7 @@
                       <Font name="Arial" size="24" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="&quot;&quot;+EzNoteTexts.SOFTWARE_NAME" type="code"/>
+                      <Connection code="&quot;&quot;+gdr.eznote.util.EzNoteStringDB.SOFTWARE_NAME" type="code"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -127,7 +127,7 @@
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="&quot;version: &quot;+EzNoteTexts.SOFTWARE_VERSION+&quot; dev&quot;" type="code"/>
+                      <Connection code="&quot;version: &quot;+gdr.eznote.util.EzNoteStringDB.SOFTWARE_VERSION+&quot; dev&quot;" type="code"/>
                     </Property>
                   </Properties>
                 </Component>

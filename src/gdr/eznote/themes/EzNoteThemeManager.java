@@ -9,6 +9,7 @@ import java.util.Arrays;
  * Class for handling theme lists and installation
  * @author GDR
  */
+@Deprecated
 public class EzNoteThemeManager {
     
     //COMPONENTS

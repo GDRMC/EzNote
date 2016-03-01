@@ -1,7 +1,7 @@
 package gdr.eznote.configuration;
 
 import gdr.eznote.exceptions.ConfiguratorException;
-import gdr.eznote.util.EzNoteTexts;
+import gdr.eznote.util.EzNoteStringDB;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -118,7 +118,7 @@ public class EzNoteConfigurator {
             toSave.setProperty("THFONT", "" + thFont);
             this.debugProperties("save");
             ok = true;
-            toSave.store(stream, "" + EzNoteTexts.CONFIGURATOR_COMMENT);
+            toSave.store(stream, "" + EzNoteStringDB.CONFIGURATOR_COMMENT);
             stream.close();
         } catch (IOException ex) {
             stream = null;
@@ -145,7 +145,7 @@ public class EzNoteConfigurator {
             props.setProperty("THEDITOR", "" + thEditor);
             props.setProperty("THFONT", "" + thFont);
             OutputStream out = new FileOutputStream(f);
-            props.store(out, "" + EzNoteTexts.CONFIGURATOR_COMMENT);
+            props.store(out, "" + EzNoteStringDB.CONFIGURATOR_COMMENT);
             ok = true;
         } catch (Exception e) {
             throw new ConfiguratorException("Cannot create configuration file");

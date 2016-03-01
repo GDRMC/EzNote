@@ -1,7 +1,6 @@
 package gdr.eznote.document;
 
 import gdr.eznote.frames.EzNoteFrame;
-import gdr.eznote.frames.*;
 import gdr.eznote.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,7 +38,6 @@ public class EzNoteDocument implements DocumentListener {
      */
     public EzNoteDocument(EzNoteFrame parent) {
         this.util = new EzNoteFrameUtil(parent);
-        parent.setDocumentListener(this);
         this.parent = parent;
         this.fresh = true;
     }
@@ -145,6 +143,9 @@ public class EzNoteDocument implements DocumentListener {
             }
         }
         this.debugChange();
+        if(saved){
+            this.file = this.parent.getFileChooser().getSelectedFile();
+        }
         if(saved){
             this.resetIndicators();
         }
@@ -295,5 +296,5 @@ public class EzNoteDocument implements DocumentListener {
         this.parent.disableSaveButtons();
         System.out.println("EzFrameDL ch > reset " + this.getChangeIndicator() + " - " + this.getChangeCounter());
     }
-
+    
 }

@@ -1,6 +1,5 @@
-package gdr.eznote.themes;
+package gdr.eznote.thememanager;
 
-@Deprecated
 public class EzNoteTheme {
     
     private final String name;
@@ -38,5 +37,13 @@ public class EzNoteTheme {
     public EzNoteColor getCaretColor() {
         return caretColor;
     }
-
+    
+    @Override
+    public String toString(){
+        return "EznoteTheme "+this.getName()+"\n"+
+                "|-- TBR: "+this.toolbarColor+"\n"+
+                "|-- EDT: "+this.editorColor+"\n"+
+                "|-- FNT: "+this.fontColor+"\n"+
+                "|-- CRT: "+this.caretColor+"\n";
+    }
 }

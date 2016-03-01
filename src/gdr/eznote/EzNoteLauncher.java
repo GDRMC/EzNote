@@ -6,7 +6,7 @@ import gdr.eznote.exceptions.ConfiguratorException;
 import gdr.eznote.themes.EzNoteColorCollection;
 import gdr.eznote.themes.EzNoteTheme;
 import gdr.eznote.themes.EzNoteThemeLibrary;
-import gdr.eznote.util.EzNoteTexts;
+import gdr.eznote.util.EzNoteStringDB;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -30,7 +30,7 @@ public class EzNoteLauncher {
         boolean debugMode = false;
         boolean ioMode = false;
         if(args.length==0){
-            System.out.println("NOTICE: TO ACTIVATE DEBUG MODE, PROMPT 'java -jar <jarfile>.jar <parameter>");
+            System.out.println("NOTICE: TO ACTIVATE DEBUG MODE, PROMPT 'java -jar <jarfile>.jar <parameter>'");
         }
         if(args.length==1 && "debug".equals(args[0])){
             debugMode = true;
@@ -89,7 +89,7 @@ public class EzNoteLauncher {
         main.setIconImage(Toolkit.getDefaultToolkit().getImage(main.getClass().getResource("/gdr/icons/icon.png")));
         
         //initializing startup
-        System.out.println("LAUNCHER: STARTING EZNOTE "+EzNoteTexts.SOFTWARE_VERSION);
+        System.out.println("LAUNCHER: STARTING EZNOTE "+EzNoteStringDB.SOFTWARE_VERSION);
         main.initializeStartup();
         
         //setting the window as visible
